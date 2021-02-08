@@ -1,5 +1,6 @@
 package co.jdti.example.springbootreactor;
 
+import co.jdti.example.springbootreactor.models.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,18 +19,19 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Flux<String> nombres = Flux.just("Hugo", "Luis", "Paco", "Maria")
-                .map(String::toUpperCase)
-                // System.out::println tambien puede ser usado para minimizar codigo
-                // como se implementa mas adelante
-                .doOnNext(elemento -> {
-                    if (elemento.isEmpty()) {
+        Flux<Usuario> usuarios = Flux.just("Hugo", "Luis", "Paco", "Maria")
+                .map(nombre -> new Usuario(nombre.toUpperCase(), null))
+                .doOnNext(usuario -> {
+                    if (usuario == null || usuario.getNombre().isEmpty()) {
                         throw new RuntimeException("Nombres no pueden ser vacíos");
                     } else {
-                        System.out.println(elemento);
+                        System.out.println(usuario.getNombre());
                     }
-                }).map(String::toUpperCase);
-        nombres.subscribe(log::info, error -> log.error(error.getMessage()), new Runnable() {
+                }).map(usuario -> {
+                    usuario.setNombre(usuario.getNombre().toLowerCase());
+                    return usuario;
+                });
+        usuarios.subscribe(us -> log.info(us.getNombre()), error -> log.error(error.getMessage()), new Runnable() {
                     @Override
                     public void run() {
                         log.info("Se ha finalizado la ejecucion del observable con exito!");
