@@ -20,7 +20,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Flux<String> nombres = Flux.just("Hugo", "Luis", "Paco", "Maria")
                 .map(String::toUpperCase)
-                // System.out::println tambien puede ser usario para minimizar codigo
+                // System.out::println tambien puede ser usado para minimizar codigo
                 // como se implementa mas adelante
                 .doOnNext(elemento -> {
                     if (elemento.isEmpty()) {
