@@ -29,9 +29,10 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                     }
                 }).map(usuario -> {
                     usuario.setNombre(usuario.getNombre().toLowerCase());
+                    usuario.setApellido(usuario.getApellido().toLowerCase());
                     return usuario;
                 });
-        usuarios.subscribe(us -> log.info(us.getNombre()), error -> log.error(error.getMessage()), new Runnable() {
+        usuarios.subscribe(us -> log.info(us.getNombre() + " " + us.getApellido()), error -> log.error(error.getMessage()), new Runnable() {
                     @Override
                     public void run() {
                         log.info("Se ha finalizado la ejecucion del observable con exito!");
