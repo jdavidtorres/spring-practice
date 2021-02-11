@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         nombres.subscribe(us -> log.info(us.getNombre().concat(" ").concat(us.getApellido())), error -> log.error(error.getMessage()), new Runnable() {
                     @Override
                     public void run() {
-                        log.info("Se ha finalizado la ejecucion del observable con exito!");
+                        log.info("Se ha finalizado la ejecucion del observable con exito!!");
                     }
                 }
         );
@@ -65,26 +66,20 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         usuarios.add("Bruce Lee");
         usuarios.add("Bruce Willis");
 
-        Flux<Usuario> nombres = Flux.fromIterable(usuarios)
+        Flux.fromIterable(usuarios)
                 .map(nombre -> new Usuario(nombre.split(" ")[0].toUpperCase(), nombre.split(" ")[1].toUpperCase()))
-                .filter(usuario -> usuario.getNombre().equalsIgnoreCase("bruce"))
-                .doOnNext(usuario -> {
-                    if (usuario == null || usuario.getNombre().isEmpty()) {
-                        throw new RuntimeException("Nombres no pueden ser vacíos");
+                .flatMap(usuario -> {
+                    if (usuario.getNombre().equalsIgnoreCase("bruce")) {
+                        return Mono.just(usuario);
                     } else {
-                        System.out.println(usuario.getNombre() + " " + usuario.getApellido());
+                        return Mono.empty();
                     }
-                }).map(usuario -> {
+                })
+                .map(usuario -> {
                     usuario.setNombre(usuario.getNombre().toLowerCase());
                     usuario.setApellido(usuario.getApellido().toLowerCase());
                     return usuario;
-                });
-        nombres.subscribe(us -> log.info(us.getNombre().concat(" ").concat(us.getApellido())), error -> log.error(error.getMessage()), new Runnable() {
-                    @Override
-                    public void run() {
-                        log.info("Se ha finalizado la ejecucion del observable con exito!");
-                    }
-                }
-        );
+                })
+                .subscribe(us -> log.info(us.toString()));
     }
 }
