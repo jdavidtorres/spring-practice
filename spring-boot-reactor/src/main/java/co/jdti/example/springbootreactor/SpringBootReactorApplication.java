@@ -8,6 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class SpringBootReactorApplication implements CommandLineRunner {
 
@@ -19,7 +22,15 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Flux<Usuario> usuarios = Flux.just("Hugo Fulano", "Luis Mengano", "Paco Zutano", "Bruce Lee", "Bruce Willis")
+        List<String> usuarios = new ArrayList<>();
+        usuarios.add("Hugo Fulano");
+        usuarios.add("Luis Mengano");
+        usuarios.add("Paco Zutano");
+        usuarios.add("Bruce Lee");
+        usuarios.add("Bruce Willis");
+
+        Flux<Usuario> nombres = /*Flux.just("Hugo Fulano", "Luis Mengano", "Paco Zutano", "Bruce Lee", "Bruce Willis")*/
+        Flux.fromIterable(usuarios)
                 .map(nombre -> new Usuario(nombre.split(" ")[0].toUpperCase(), nombre.split(" ")[1].toUpperCase()))
                 .filter(usuario -> usuario.getNombre().equalsIgnoreCase("bruce"))
                 .doOnNext(usuario -> {
@@ -33,7 +44,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                     usuario.setApellido(usuario.getApellido().toLowerCase());
                     return usuario;
                 });
-        usuarios.subscribe(us -> log.info(us.getNombre().concat(" ").concat(us.getApellido())), error -> log.error(error.getMessage()), new Runnable() {
+        nombres.subscribe(us -> log.info(us.getNombre().concat(" ").concat(us.getApellido())), error -> log.error(error.getMessage()), new Runnable() {
                     @Override
                     public void run() {
                         log.info("Se ha finalizado la ejecucion del observable con exito!");
