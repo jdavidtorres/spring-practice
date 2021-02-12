@@ -32,6 +32,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploUsuarioComentarioFlatMap();
         ejemploUsuarioComentarioZipWith();
         ejemploUsuarioComentarioZipWithV2();
+        ejemploZipWithRangos();
     }
 
     public void ejemploIterable() {
@@ -177,5 +178,12 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                     return new UsuarioComentario(u, c);
                 });
         usuarioConComentarios.subscribe(uc -> log.info(uc.toString()));
+    }
+
+    private void ejemploZipWithRangos() {
+        Flux.just(1, 2, 3, 4, 5)
+                .map(i -> (i * 2))
+                .zipWith(Flux.range(0, 4), (uno, dos) -> String.format("Primer flux: %d, segundo flux: %d", uno, dos))
+                .subscribe(log::info);
     }
 }
