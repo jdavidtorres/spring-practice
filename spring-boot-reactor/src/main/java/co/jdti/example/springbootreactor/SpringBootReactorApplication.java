@@ -26,6 +26,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploIterable();
         ejemploFlatMap();
         ejemploToString();
+        ejemploToCollectList();
     }
 
     public void ejemploIterable() {
@@ -106,5 +107,17 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                 })
                 .map(String::toLowerCase) // Es igual a usuario -> usuario.toLowerCase
                 .subscribe(log::info);
+    }
+
+    private void ejemploToCollectList() {
+        log.info("ejemploToCollectList()...");
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario("Hugo", "Fulano"));
+        usuarios.add(new Usuario("Luis", "Mengano"));
+        usuarios.add(new Usuario("Paco", "Zutano"));
+        usuarios.add(new Usuario("Bruce", "Lee"));
+        usuarios.add(new Usuario("Bruce", "Willis"));
+
+        Flux.fromIterable(usuarios).collectList().subscribe(lista -> log.info(lista.toString()));
     }
 }
