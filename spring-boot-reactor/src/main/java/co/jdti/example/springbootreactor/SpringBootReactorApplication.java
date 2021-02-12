@@ -25,9 +25,10 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         ejemploIterable();
         ejemploFlatMap();
+        ejemploToString();
     }
 
-    public void ejemploIterable() throws Exception {
+    public void ejemploIterable() {
         List<String> usuarios = new ArrayList<>();
         usuarios.add("Hugo Fulano");
         usuarios.add("Luis Mengano");
@@ -81,5 +82,14 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                     return usuario;
                 })
                 .subscribe(us -> log.info(us.toString()));
+    }
+
+    private void ejemploToString() {
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario("Hugo", "Fulano"));
+        usuarios.add(new Usuario("Luis", "Mengano"));
+        usuarios.add(new Usuario("Paco", "Zutano"));
+        usuarios.add(new Usuario("Bruce", "Lee"));
+        usuarios.add(new Usuario("Bruce", "Willis"));
     }
 }
