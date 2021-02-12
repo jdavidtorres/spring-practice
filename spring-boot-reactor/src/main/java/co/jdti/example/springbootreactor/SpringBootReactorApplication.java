@@ -29,7 +29,8 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploFlatMap();
         ejemploToString();
         ejemploToCollectList();
-        ejemploUsuarioComentarioFlatMao();
+        ejemploUsuarioComentarioFlatMap();
+        ejemploUsuarioComentarioZipWith();
     }
 
     public void ejemploIterable() {
@@ -127,8 +128,8 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         });
     }
 
-    private void ejemploUsuarioComentarioFlatMao() {
-        log.info("ejemploUsuarioComentarioFlatMao()...");
+    private void ejemploUsuarioComentarioFlatMap() {
+        log.info("ejemploUsuarioComentarioFlatMap()...");
         Mono<Usuario> usuarioMono = Mono.fromCallable(this::crearUsuario);
         Mono<Comentarios> comentarioUsuariosMono = Mono.fromCallable(() -> {
             Comentarios comentario = new Comentarios();
@@ -143,5 +144,19 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     private Usuario crearUsuario() {
         return new Usuario("Jhon", "Doe");
+    }
+
+    private void ejemploUsuarioComentarioZipWith() {
+        log.info("ejemploUsuarioComentarioZipWith()...");
+        Mono<Usuario> usuarioMono = Mono.fromCallable(() -> new Usuario("Jhon", "Doe"));
+        Mono<Comentarios> comentarioUsuariosMono = Mono.fromCallable(() -> {
+            Comentarios comentario = new Comentarios();
+            comentario.addComentario("Hola pepe que tal?");
+            comentario.addComentario("Estoy haciendo un curso de reactor");
+            comentario.addComentario("Saludos");
+            return comentario;
+        });
+        Mono<UsuarioComentario> usuarioConComentarios = usuarioMono.zipWith(comentarioUsuariosMono, (usu, com) -> new UsuarioComentario(usu, com));
+        usuarioConComentarios.subscribe(uc -> log.info(uc.toString()));
     }
 }
