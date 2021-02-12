@@ -31,6 +31,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploToCollectList();
         ejemploUsuarioComentarioFlatMap();
         ejemploUsuarioComentarioZipWith();
+        ejemploUsuarioComentarioZipWithV2();
     }
 
     public void ejemploIterable() {
@@ -158,7 +159,23 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         });
         usuarioMono.zipWith(comentarioUsuariosMono, UsuarioComentario::new).subscribe(uc -> log.info(uc.toString()));
     }
-        Mono<UsuarioComentario> usuarioConComentarios = usuarioMono.zipWith(comentarioUsuariosMono, UsuarioComentario::new);
+
+    private void ejemploUsuarioComentarioZipWithV2() {
+        log.info("ejemploUsuarioComentarioZipWithV2()...");
+        Mono<Usuario> usuarioMono = Mono.fromCallable(() -> new Usuario("Jhon", "Doe"));
+        Mono<Comentarios> comentarioUsuariosMono = Mono.fromCallable(() -> {
+            Comentarios comentario = new Comentarios();
+            comentario.addComentario("Hola pepe que tal?");
+            comentario.addComentario("Estoy haciendo un curso de reactor");
+            comentario.addComentario("Saludos");
+            return comentario;
+        });
+        Mono<UsuarioComentario> usuarioConComentarios = usuarioMono.zipWith(comentarioUsuariosMono)
+                .map(tuple -> {
+                    Usuario u = tuple.getT1();
+                    Comentarios c = tuple.getT2();
+                    return new UsuarioComentario(u, c);
+                });
         usuarioConComentarios.subscribe(uc -> log.info(uc.toString()));
     }
 }
