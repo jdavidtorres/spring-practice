@@ -156,7 +156,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
             comentario.addComentario("Saludos");
             return comentario;
         });
-        Mono<UsuarioComentario> usuarioConComentarios = usuarioMono.zipWith(comentarioUsuariosMono, (usu, com) -> new UsuarioComentario(usu, com));
+        Mono<UsuarioComentario> usuarioConComentarios = usuarioMono.zipWith(comentarioUsuariosMono, UsuarioComentario::new);
         usuarioConComentarios.subscribe(uc -> log.info(uc.toString()));
     }
 }
