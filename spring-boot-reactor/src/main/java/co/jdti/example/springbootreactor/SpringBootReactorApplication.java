@@ -118,6 +118,9 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         usuarios.add(new Usuario("Bruce", "Lee"));
         usuarios.add(new Usuario("Bruce", "Willis"));
 
-        Flux.fromIterable(usuarios).collectList().subscribe(lista -> log.info(lista.toString()));
+        Flux.fromIterable(usuarios).collectList().subscribe(lista -> {
+            log.info(lista.toString());
+            lista.forEach(usuario -> log.info(usuario.getNombre()));
+        });
     }
 }
