@@ -1,6 +1,8 @@
 package co.jdti.example.springbootreactor;
 
+import co.jdti.example.springbootreactor.models.Comentarios;
 import co.jdti.example.springbootreactor.models.Usuario;
+import co.jdti.example.springbootreactor.models.UsuarioComentario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +29,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploFlatMap();
         ejemploToString();
         ejemploToCollectList();
+        ejemploUsuarioComentarioFlatMao();
     }
 
     public void ejemploIterable() {
@@ -122,5 +125,23 @@ public class SpringBootReactorApplication implements CommandLineRunner {
             log.info(lista.toString());
             lista.forEach(usuario -> log.info(usuario.getNombre()));
         });
+    }
+
+    private void ejemploUsuarioComentarioFlatMao() {
+        log.info("ejemploUsuarioComentarioFlatMao()...");
+        Mono<Usuario> usuarioMono = Mono.fromCallable(this::crearUsuario);
+        Mono<Comentarios> comentarioUsuariosMono = Mono.fromCallable(() -> {
+            Comentarios comentario = new Comentarios();
+            comentario.addComentario("Hola pepe que tal?");
+            comentario.addComentario("Estoy haciendo un curso de reactor");
+            comentario.addComentario("Saludos");
+            return comentario;
+        });
+        usuarioMono.flatMap(u -> comentarioUsuariosMono.map(c -> new UsuarioComentario(u, c)))
+                .subscribe(uc -> log.info(uc.toString()));
+    }
+
+    private Usuario crearUsuario() {
+        return new Usuario("Jhon", "Doe");
     }
 }
