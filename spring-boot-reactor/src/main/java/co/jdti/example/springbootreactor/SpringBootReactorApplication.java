@@ -29,6 +29,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     }
 
     public void ejemploIterable() {
+        log.info("ejemploIterable()...");
         List<String> usuarios = new ArrayList<>();
         usuarios.add("Hugo Fulano");
         usuarios.add("Luis Mengano");
@@ -60,6 +61,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     }
 
     private void ejemploFlatMap() {
+        log.info("ejemploFlatMap()...");
         List<String> usuarios = new ArrayList<>();
         usuarios.add("Hugo Fulano");
         usuarios.add("Luis Mengano");
@@ -85,11 +87,24 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     }
 
     private void ejemploToString() {
+        log.info("ejemploToString()...");
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario("Hugo", "Fulano"));
         usuarios.add(new Usuario("Luis", "Mengano"));
         usuarios.add(new Usuario("Paco", "Zutano"));
         usuarios.add(new Usuario("Bruce", "Lee"));
         usuarios.add(new Usuario("Bruce", "Willis"));
+
+        Flux.fromIterable(usuarios)
+                .map(usuario -> usuario.getNombre().toUpperCase().concat(" " + usuario.getApellido()))
+                .flatMap(nombre -> {
+                    if (nombre.contains("bruce".toUpperCase())) {
+                        return Mono.just(nombre);
+                    } else {
+                        return Mono.empty();
+                    }
+                })
+                .map(String::toLowerCase) // Es igual a usuario -> usuario.toLowerCase
+                .subscribe(log::info);
     }
 }
