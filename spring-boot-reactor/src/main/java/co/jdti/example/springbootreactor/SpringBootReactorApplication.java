@@ -26,15 +26,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ejemploIterable();
-        ejemploFlatMap();
-        ejemploToString();
-        ejemploToCollectList();
-        ejemploUsuarioComentarioFlatMap();
-        ejemploUsuarioComentarioZipWith();
-        ejemploUsuarioComentarioZipWithV2();
-        ejemploZipWithRangos();
-        ejemploInterval();
+        delayElements();
     }
 
     public void ejemploIterable() {
@@ -195,6 +187,14 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         Flux<Integer> rango = Flux.range(1, 12);
         Flux<Long> retraso = Flux.interval(Duration.ofSeconds(1L));
         rango.zipWith(retraso, (ra, re) -> ra)
+                .doOnNext(i -> log.info(i.toString()))
+                .blockLast();
+    }
+
+    private void delayElements() {
+        log.info("delayElements()...");
+        Flux.range(1, 12)
+                .delayElements(Duration.ofSeconds(1L))
                 .doOnNext(i -> log.info(i.toString()))
                 .blockLast();
     }
