@@ -3,6 +3,8 @@ package co.jdti.example.springbootreactor;
 import co.jdti.example.springbootreactor.models.Comentarios;
 import co.jdti.example.springbootreactor.models.Usuario;
 import co.jdti.example.springbootreactor.models.UsuarioComentario;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -29,7 +31,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        delayIntervalDesdeCreate();
+        ejemploContraPresion();
     }
 
     public void ejemploIterable() {
@@ -241,5 +243,40 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                 .doOnNext(next -> log.info(next.toString()))
                 .doOnComplete(() -> log.info("Ha terminado el flujo!"))
                 .subscribe();
+    }
+
+    private void ejemploContraPresion() {
+        log.info("ejemploContraPresion()...");
+        Flux.range(1, 50)
+                .log()
+                .subscribe(new Subscriber<Integer>() {
+                    private Subscription s;
+                    private Integer limite = 5;
+                    private Integer consumido = 0;
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        this.s = s;
+                        s.request(limite);
+                    }
+
+                    @Override
+                    public void onNext(Integer item) {
+                        log.info(item.toString());
+                        consumido++;
+                        if (consumido == limite) {
+                            consumido = 0;
+                            s.request(limite);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }
