@@ -31,7 +31,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ejemploContraPresion();
+        ejemploContraPresionV2();
     }
 
     public void ejemploIterable() {
@@ -278,5 +278,13 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                     public void onComplete() {
                     }
                 });
+    }
+
+    private void ejemploContraPresionV2() {
+        log.info("ejemploContraPresionV2()...");
+        Flux.range(1, 50)
+                .log()
+                .limitRate(5)
+                .subscribe();
     }
 }
