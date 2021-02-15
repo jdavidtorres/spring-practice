@@ -221,7 +221,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         latch.await();
     }
 
-    private void delayIntervalDesdeCreate() throws InterruptedException {
+    private void delayIntervalDesdeCreate() {
         log.info("delayIntervalDesdeCreate()...");
         Flux.create(emmiter -> {
             Timer timer = new Timer();
