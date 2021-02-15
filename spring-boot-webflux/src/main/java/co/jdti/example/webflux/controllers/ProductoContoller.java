@@ -16,7 +16,11 @@ public class ProductoContoller {
 
     @GetMapping("/listar")
     public String listar(Model model) {
-        Flux<Producto> productos = iProductRepository.findAll();
+        Flux<Producto> productos = iProductRepository.findAll().map(producto -> {
+            producto.setNombre(producto.getNombre().toUpperCase());
+            return producto;
+        });
+        productos.subscribe();
         model.addAttribute("titulo", "Titulo");
         model.addAttribute("productos", productos);
         return "listar";
