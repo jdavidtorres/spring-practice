@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 public class SpringBootReactorApplication implements CommandLineRunner {
@@ -26,7 +27,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        delayElements();
+        delayIntervalInfinito();
     }
 
     public void ejemploIterable() {
@@ -197,5 +198,24 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                 .delayElements(Duration.ofSeconds(1L))
                 .doOnNext(i -> log.info(i.toString()))
                 .blockLast();
+    }
+
+    private void delayIntervalInfinito() throws InterruptedException {
+        log.info("delayIntervalInfinito()...");
+
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Flux.interval(Duration.ofSeconds(1L))
+                .doOnTerminate(latch::countDown)
+                .flatMap(i -> {
+                    if (i >= 5) {
+                        return Flux.error(new InterruptedException("Solo cuenta hasta 5!!"));
+                    }
+                    return Flux.just(i);
+                })
+                .map(i -> "Hola " + i)
+                .retry(1)
+                .subscribe(log::info, e -> log.error(e.getMessage()));
+        latch.await();
     }
 }
