@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
         ejemploUsuarioComentarioZipWith();
         ejemploUsuarioComentarioZipWithV2();
         ejemploZipWithRangos();
+        ejemploInterval();
     }
 
     public void ejemploIterable() {
@@ -181,9 +183,19 @@ public class SpringBootReactorApplication implements CommandLineRunner {
     }
 
     private void ejemploZipWithRangos() {
+        log.info("ejemploZipWithRangos()...");
         Flux.just(1, 2, 3, 4, 5)
                 .map(i -> (i * 2))
                 .zipWith(Flux.range(0, 4), (uno, dos) -> String.format("Primer flux: %d, segundo flux: %d", uno, dos))
                 .subscribe(log::info);
+    }
+
+    private void ejemploInterval() {
+        log.info("ejemploInterval()...");
+        Flux<Integer> rango = Flux.range(1, 12);
+        Flux<Long> retraso = Flux.interval(Duration.ofSeconds(1L));
+        rango.zipWith(retraso, (ra, re) -> ra)
+                .doOnNext(i -> log.info(i.toString()))
+                .blockLast();
     }
 }
