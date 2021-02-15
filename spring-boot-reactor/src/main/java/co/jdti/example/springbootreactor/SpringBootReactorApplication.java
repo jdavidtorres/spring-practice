@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
@@ -27,7 +29,7 @@ public class SpringBootReactorApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        delayIntervalInfinito();
+        delayIntervalDesdeCreate();
     }
 
     public void ejemploIterable() {
@@ -217,5 +219,27 @@ public class SpringBootReactorApplication implements CommandLineRunner {
                 .retry(1)
                 .subscribe(log::info, e -> log.error(e.getMessage()));
         latch.await();
+    }
+
+    private void delayIntervalDesdeCreate() throws InterruptedException {
+        log.info("delayIntervalDesdeCreate()...");
+        Flux.create(emmiter -> {
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                private Integer contador = 0;
+
+                @Override
+                public void run() {
+                    emmiter.next(++contador);
+                    if (contador == 10) {
+                        timer.cancel();
+                        emmiter.complete();
+                    }
+                }
+            }, 1000, 1000);
+        })
+                .doOnNext(next -> log.info(next.toString()))
+                .doOnComplete(() -> log.info("Ha terminado el flujo!"))
+                .subscribe();
     }
 }
