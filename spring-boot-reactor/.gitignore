@@ -13,8 +13,6 @@ gradlew*
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
 .idea
