@@ -32,7 +32,18 @@ public class SpringBootWebfluxApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         template.dropCollection(Producto.class).subscribe();
-        Flux.just(new Producto("TV Panasocic Pantalla LCD", 750000.00), new Producto("Camara HD Sony", 378900.00))
+        Flux.just(new Producto("TV Panasocic Pantalla LCD", 750000.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00),
+                new Producto("Camara HD Sony", 378900.00))
                 .flatMap(producto -> {
                     producto.setCreatedAt(new Date());
                     return iProductRepository.save(producto);
