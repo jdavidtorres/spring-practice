@@ -35,15 +35,15 @@ public class SpringBootWebfluxApplication implements CommandLineRunner {
         Flux.just(new Producto("TV Panasocic Pantalla LCD", 750000.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
+                new Producto("Portatil HP 450", 378900.00),
+                new Producto("Portatil DELL XPS", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
                 new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00))
+                new Producto("Telefono Samsung S10+", 2450000.00))
                 .flatMap(producto -> {
                     producto.setCreatedAt(new Date());
                     return iProductRepository.save(producto);
