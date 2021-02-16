@@ -40,4 +40,16 @@ public class ProductoContoller {
         model.addAttribute("productos", new ReactiveDataDriverContextVariable(productos, 1));
         return "listar";
     }
+
+    @GetMapping("/listar-full")
+    public String listarFull(Model model) {
+        Flux<Producto> productos = iProductRepository.findAll().map(producto -> {
+            producto.setNombre(producto.getNombre().toUpperCase());
+            return producto;
+        }).repeat(500);
+        productos.subscribe();
+        model.addAttribute("titulo", "Titulo");
+        model.addAttribute("productos", productos);
+        return "listar";
+    }
 }
