@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org/">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="${titulo}">Document</title>
+    </head>
+    <body>
+        <a th:href="@{/listar}">Volver</a>
+        <div>
+            <form th:action="@{/form}" th:method="post" th:object="${producto}">
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <div><input id="nombre" type="text" th:field="*{nombre}"></div>
+                </div>
+                <div>
+                    <label for="precio">Precio</label>
+                    <div><input id="precio" type="number" th:field="*{precio}"></div>
+                </div>
+                <div>
+                    <label for="createdAt">Fecha</label>
+                    <div><input id="createdAt" type="date" th:field="*{createdAt}"></div>
+                </div>
+                <div>
+                    <div><input type="submit" th:value="Guardar"></div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

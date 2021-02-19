@@ -28,7 +28,7 @@ public class ProductoContoller {
         return "listar";
     }
 
-    @GetMapping("form")
+    @GetMapping("/form")
     public Mono<String> crear(Model model) {
         model.addAttribute("titulo", "Formulario de producto");
         model.addAttribute("producto", new Producto());
