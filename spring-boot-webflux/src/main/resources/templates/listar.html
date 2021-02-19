@@ -23,7 +23,7 @@
                     <td th:text="${producto.nombre}"></td>
                     <td th:text="${producto.precio}"></td>
                     <td th:text="${producto.createdAt}"></td>
-                    <td></td>
+                    <td><a th:href="@{/form/} + ${producto.id}">Edit</a></td>
                 </tr>
             </tbody>
         </table>
