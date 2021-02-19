@@ -1,7 +1,7 @@
 package co.jdti.example.webflux.controllers;
 
 import co.jdti.example.webflux.models.documents.Producto;
-import co.jdti.example.webflux.repositories.IProductRepository;
+import co.jdti.example.webflux.services.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +15,11 @@ import reactor.core.publisher.Mono;
 public class ProductoRestController {
 
     @Autowired
-    private IProductRepository iProductRepository;
+    private IProductoService iProductoService;
 
     @GetMapping
     public Flux<Producto> getProductos() {
-        return iProductRepository.findAll().map(producto -> {
+        return iProductoService.findAll().map(producto -> {
             producto.setNombre(producto.getNombre().toUpperCase());
             return producto;
         });
@@ -27,6 +27,6 @@ public class ProductoRestController {
 
     @GetMapping("/{id}")
     public Mono<Producto> show(@PathVariable String id) {
-        return iProductRepository.findById(id);
+        return iProductoService.findById(id);
     }
 }
