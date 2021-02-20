@@ -77,6 +77,20 @@ public class ProductoContoller {
                 .onErrorResume(ex -> Mono.just("redirect:/listar?error=No+existe+el+producto"));
     }
 
+    @GetMapping("/eliminar/{id}")
+    public Mono<String> eliminar(@PathVariable String id) {
+        return iProductoService.findById(id)
+                .defaultIfEmpty(new Producto())
+                .flatMap(p -> {
+                    if (p.getId() == null) {
+                        return Mono.error(new InterruptedException("No existe el producto"));
+                    }
+                    return Mono.just(p);
+                }).flatMap(p -> iProductoService.delete(p))
+                .thenReturn("redirect:/listar")
+                .onErrorResume(ex -> Mono.just("redirect:/listar?error=No+existe+el+producto"));
+    }
+
     @GetMapping("/listar-datadriver")
     public String listarDataDriver(Model model) {
         Flux<Producto> productos = iProductoService.findAllConNombreUpperCase().delayElements(Duration.ofSeconds(1));
