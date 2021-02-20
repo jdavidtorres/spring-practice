@@ -16,6 +16,7 @@
                     <th>nombre</th>
                     <th>precio</th>
                     <th>fecha</th>
+                    <th>categoria</th>
                     <th>acciones</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                     <td th:text="${producto.nombre}"></td>
                     <td th:text="${producto.precio}"></td>
                     <td th:text="${producto.createdAt}"></td>
+                    <td th:text="${producto.categoria.nombre}"></td>
                     <td>
                         <a th:href="@{/form/} + ${producto.id}">Edit</a>
                         <a th:href="@{/form-v2/} + ${producto.id}">Edit-V2</a>
