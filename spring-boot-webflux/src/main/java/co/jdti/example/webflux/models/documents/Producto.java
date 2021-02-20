@@ -29,11 +29,6 @@ public class Producto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
-    public Producto(String nombre, Double precio) {
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
     public Producto(String nombre, Double precio, Categoria categoria) {
         this.nombre = nombre;
         this.precio = precio;
