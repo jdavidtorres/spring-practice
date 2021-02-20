@@ -1,8 +1,9 @@
 package co.jdti.example.webflux;
 
 
+import co.jdti.example.webflux.models.documents.Categoria;
 import co.jdti.example.webflux.models.documents.Producto;
-import co.jdti.example.webflux.repositories.IProductRepository;
+import co.jdti.example.webflux.services.IProductoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class SpringBootWebfluxApplication implements CommandLineRunner {
     private ReactiveMongoTemplate template;
 
     @Autowired
-    private IProductRepository iProductRepository;
+    private IProductoService iProductoService;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootWebfluxApplication.class, args);
@@ -32,22 +33,29 @@ public class SpringBootWebfluxApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         template.dropCollection(Producto.class).subscribe();
-        Flux.just(new Producto("TV Panasocic Pantalla LCD", 750000.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Portatil HP 450", 378900.00),
-                new Producto("Portatil DELL XPS", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Camara HD Sony", 378900.00),
-                new Producto("Telefono Samsung S10+", 2450000.00))
-                .flatMap(producto -> {
-                    producto.setCreatedAt(new Date());
-                    return iProductRepository.save(producto);
-                })
-                .subscribe(producto -> log.info(producto.getNombre()));
+        template.dropCollection(Categoria.class).subscribe();
+
+        Categoria electronico = new Categoria("Electrónico");
+        Categoria deporte = new Categoria("Deporte");
+        Categoria computacion = new Categoria("Computación");
+        Categoria muebles = new Categoria("Muebles");
+
+        Flux.just(electronico, deporte, computacion, muebles)
+                .flatMap(iProductoService::save)
+                .thenMany(Flux.just(new Producto("TV Panasocic Pantalla LCD", 456.89, electronico),
+                        new Producto("Camara Sony HD Digital", 177.89, electronico),
+                        new Producto("Apple iPod", 46.89, electronico),
+                        new Producto("Notebook Sony", 846.89, computacion),
+                        new Producto("Multifuncional Hewlett Packard", 200.89, computacion),
+                        new Producto("Bicicleta Bianchi", 70.89, deporte),
+                        new Producto("Notebook HP Omen 17", 2500.89, computacion),
+                        new Producto("Mica Cómoda 5 Cajones", 150.89, muebles),
+                        new Producto("TV Sony Bravia OLED 4K Ultra HD", 2255.89, electronico),
+                        new Producto("Telefono Samsung S10+", 400.00, electronico))
+                        .flatMap(producto -> {
+                            producto.setCreatedAt(new Date());
+                            return iProductoService.save(producto);
+                        }))
+                .subscribe();
     }
 }
