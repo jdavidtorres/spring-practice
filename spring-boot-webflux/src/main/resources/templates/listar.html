@@ -8,6 +8,7 @@
         <title th:text="${titulo}">Document</title>
     </head>
     <body>
+        <div th:text="${param.error}" th:if="${param.error != null}"></div>
         <a th:href="@{/form}">Crear +</a>
         <table>
             <thead>
@@ -23,7 +24,10 @@
                     <td th:text="${producto.nombre}"></td>
                     <td th:text="${producto.precio}"></td>
                     <td th:text="${producto.createdAt}"></td>
-                    <td><a th:href="@{/form/} + ${producto.id}">Edit</a></td>
+                    <td>
+                        <a th:href="@{/form/} + ${producto.id}">Edit</a>
+                        <a th:href="@{/form-v2/} + ${producto.id}">Edit-V2</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
