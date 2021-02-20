@@ -27,6 +27,16 @@
                     <div><input id="createdAt" type="date" th:field="*{createdAt}"></div>
                 </div>
                 <div>
+                    <label for="categoria">Categorias</label>
+                    <div>
+                        <select id="categoria" th:field="*{categoria.id}">
+                            <option value="">--Seleccionar--</option>
+                            <option th:each="categoria: ${categorias}" th:value="${categoria.id}"
+                                    th:text="${categoria.nombre}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
                     <div><input type="submit" th:value="${botonEnviar}"></div>
                 </div>
             </form>
