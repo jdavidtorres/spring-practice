@@ -5,6 +5,7 @@ import co.jdti.example.webflux.services.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.time.Duration;
 
 @Controller
@@ -38,8 +40,14 @@ public class ProductoContoller {
     }
 
     @PostMapping("/form")
-    public Mono<String> guardar(Producto producto) {
-        return iProductoService.save(producto).thenReturn("redirect:/listar");
+    public Mono<String> guardar(@Valid Producto producto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("titulo", "Error en el formulario");
+            model.addAttribute("botonEnviar", "Guardar");
+            return Mono.just("form");
+        } else {
+            return iProductoService.save(producto).thenReturn("redirect:/listar");
+        }
     }
 
     @GetMapping("/form/{id}")

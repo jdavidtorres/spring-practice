@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 @Service
 public class ProductoServiceImpl implements IProductoService {
 
@@ -38,6 +40,9 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Override
     public Mono<Producto> save(Producto producto) {
+        if (producto.getCreatedAt() == null) {
+            producto.setCreatedAt(new Date());
+        }
         return iProductRepository.save(producto);
     }
 
