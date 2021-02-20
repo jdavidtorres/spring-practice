@@ -1,6 +1,8 @@
 package co.jdti.example.webflux.services;
 
+import co.jdti.example.webflux.models.documents.Categoria;
 import co.jdti.example.webflux.models.documents.Producto;
+import co.jdti.example.webflux.repositories.ICategoriaRepository;
 import co.jdti.example.webflux.repositories.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Autowired
     private IProductRepository iProductRepository;
+
+    @Autowired
+    private ICategoriaRepository iCategoriaRepository;
 
     @Override
     public Flux<Producto> findAll() {
@@ -49,5 +54,20 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     public Mono<Void> delete(Producto producto) {
         return iProductRepository.delete(producto);
+    }
+
+    @Override
+    public Flux<Categoria> findAllCategoria() {
+        return iCategoriaRepository.findAll();
+    }
+
+    @Override
+    public Mono<Categoria> findCategoriaById(String id) {
+        return iCategoriaRepository.findById(id);
+    }
+
+    @Override
+    public Mono<Categoria> save(Categoria categoria) {
+        return iCategoriaRepository.save(categoria);
     }
 }
