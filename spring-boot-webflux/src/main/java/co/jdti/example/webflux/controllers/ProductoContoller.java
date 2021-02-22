@@ -145,4 +145,21 @@ public class ProductoContoller {
     public Flux<Categoria> categorias() {
         return iProductoService.findAllCategoria();
     }
+
+    @GetMapping("/ver/{id}")
+    public Mono<String> ver(Model model, @PathVariable String id) {
+        return iProductoService.findById(id)
+                .doOnNext(p -> {
+                    model.addAttribute("producto", p);
+                    model.addAttribute("titulo", "Detalle Producto");
+                }).defaultIfEmpty(new Producto())
+                .flatMap(p -> {
+                    if (p.getId() == null) {
+                        return Mono.error(new InterruptedException("No existe el producto"));
+                    }
+                    return Mono.just(p);
+                })
+                .thenReturn("ver")
+                .onErrorResume(ex -> Mono.just("redirect:/listar?error=no+existe+el+producto"));
+    }
 }

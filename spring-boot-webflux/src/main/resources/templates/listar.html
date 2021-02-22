@@ -23,10 +23,11 @@
             <tbody>
                 <tr th:each="producto: ${productos}">
                     <td th:text="${producto.nombre}"></td>
-                    <td th:text="${producto.precio}"></td>
-                    <td th:text="${producto.createdAt}"></td>
+                    <td th:text="${#numbers.formatCurrency(producto.precio)}"></td>
+                    <td th:text="${#calendars.format(producto.createdAt, 'dd/MM/yyyy')}"></td>
                     <td th:text="${producto.categoria.nombre}"></td>
                     <td>
+                        <a th:href="@{/ver/} + ${producto.id}">Ver</a>
                         <a th:href="@{/form/} + ${producto.id}">Edit</a>
                         <a th:href="@{/form-v2/} + ${producto.id}">Edit-V2</a>
                         <a th:href="@{/eliminar/} + ${producto.id}">Eliminar</a>
