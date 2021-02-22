@@ -53,6 +53,7 @@ public class ProductoContoller {
         return Mono.just("form");
     }
 
+    // El parametro Binding Result debe ir despues del parametro que se va a validar con @Valid
     @PostMapping("/form")
     public Mono<String> guardar(@Valid Producto producto, BindingResult result, Model model, @RequestPart FilePart file) {
         if (result.hasErrors()) {
