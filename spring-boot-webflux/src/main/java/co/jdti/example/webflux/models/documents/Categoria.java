@@ -16,7 +16,6 @@ public class Categoria {
     @NotEmpty
     private String id;
 
-    @NotEmpty
     private String nombre;
 
     public Categoria(String nombre) {
