@@ -4,6 +4,7 @@ build/
 gradle/
 gradlew*
 uploads/
+.run/
 
 ### STS ###
 .apt_generated
