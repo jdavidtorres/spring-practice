@@ -24,6 +24,7 @@ public class Producto {
     @NotNull
     private Double precio;
 
+    @Valid
     private Categoria categoria;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
