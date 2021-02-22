@@ -48,7 +48,11 @@ public class ProductoServiceImpl implements IProductoService {
         if (producto.getCreatedAt() == null) {
             producto.setCreatedAt(new Date());
         }
-        return iProductRepository.save(producto);
+        Mono<Categoria> categoriaMono = findCategoriaById(producto.getCategoria().getId());
+        return categoriaMono.flatMap(cat -> {
+            producto.setCategoria(cat);
+            return iProductRepository.save(producto);
+        });
     }
 
     @Override
