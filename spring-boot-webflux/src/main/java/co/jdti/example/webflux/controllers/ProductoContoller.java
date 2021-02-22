@@ -3,7 +3,11 @@ package co.jdti.example.webflux.controllers;
 import co.jdti.example.webflux.models.documents.Categoria;
 import co.jdti.example.webflux.models.documents.Producto;
 import co.jdti.example.webflux.services.IProductoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,18 +15,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.time.Duration;
+import java.util.UUID;
 
 @Controller
 public class ProductoContoller {
 
+    private final Logger log = LoggerFactory.getLogger(ProductoContoller.class);
+
     @Autowired
     private IProductoService iProductoService;
+
+    @Value("${config.uploads.path}")
+    private String path;
 
     @GetMapping({"/listar", ""})
     public String listar(Model model) {
@@ -42,13 +54,30 @@ public class ProductoContoller {
     }
 
     @PostMapping("/form")
-    public Mono<String> guardar(@Valid Producto producto, BindingResult result, Model model) {
+    public Mono<String> guardar(@Valid Producto producto, BindingResult result, Model model, @RequestPart FilePart file) {
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Error en el formulario");
             model.addAttribute("botonEnviar", "Guardar");
+            log.error(result.getAllErrors().toString());
             return Mono.just("form");
         } else {
-            return iProductoService.save(producto).thenReturn("redirect:/listar");
+            if (!file.filename().isEmpty()) {
+                producto.setFoto(UUID.randomUUID().toString() + "_" + file.filename()
+                        .replace(" ", "")
+                        .replace(":", "")
+                        .replace("\\", "")
+                        .trim());
+            } else {
+                log.warn("Sin foto!!");
+            }
+            return iProductoService.save(producto)
+                    .flatMap(pf -> {
+                        if (!file.filename().isEmpty()) {
+                            return file.transferTo(new File(path + producto.getFoto()));
+                        }
+                        return Mono.empty();
+                    })
+                    .thenReturn("redirect:/listar");
         }
     }
 
