@@ -90,4 +90,22 @@ public class ProductoController {
         }).map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.noContent().build());
     }
+
+    @PostMapping("/v2")
+    public Mono<ResponseEntity<Producto>> crearConFoto(Producto producto, @RequestPart FilePart filePart) {
+        if (producto.getCreatedAt() == null) {
+            producto.setCreatedAt(new Date());
+        }
+        producto.setFoto(UUID.randomUUID().toString() + "_" + filePart.filename()
+                .replace(" ", "")
+                .replace(":", "")
+                .replace("\\", ""));
+
+        return filePart.transferTo(new File(path + producto.getFoto()))
+                .then(iProductoService.save(producto))
+                .map(p -> ResponseEntity.created(URI.create("/api/productos/" + p.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(p))
+                .defaultIfEmpty(ResponseEntity.badRequest().body(producto));
+    }
 }
