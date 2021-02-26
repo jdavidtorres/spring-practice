@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
 import java.net.URI;
 import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -27,6 +31,9 @@ public class ProductoController {
 
     @Autowired
     private IProductoService iProductoService;
+
+    @Value("${config.uploads.path}")
+    private String path;
 
     @GetMapping
     public Flux<Producto> productoFlux() {
@@ -70,5 +77,17 @@ public class ProductoController {
         return iProductoService.findById(id).flatMap(p -> iProductoService.delete(p)
                 .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NO_CONTENT)));
+    }
+
+    @PostMapping("/upload/{id}")
+    public Mono<ResponseEntity<Producto>> upload(@PathVariable String id, @RequestPart FilePart filePart) {
+        return iProductoService.findById(id).flatMap(p -> {
+            p.setFoto(UUID.randomUUID().toString() + "_" + filePart.filename()
+                    .replace(" ", "")
+                    .replace(":", "")
+                    .replace("\\", ""));
+            return filePart.transferTo(new File(path + p.getFoto())).then(iProductoService.save(p));
+        }).map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 }
