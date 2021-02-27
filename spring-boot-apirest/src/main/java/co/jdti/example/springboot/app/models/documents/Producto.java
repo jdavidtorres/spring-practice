@@ -26,6 +26,7 @@ public class Producto {
     private Double precio;
 
     @Valid
+    @NotNull
     private Categoria categoria;
 
     private String foto;
