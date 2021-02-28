@@ -25,7 +25,3 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	compile 'io.projectreactor:reactor-core'
 }
-
-test {
-	useJUnitPlatform()
-}
