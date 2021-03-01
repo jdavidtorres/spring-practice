@@ -3,14 +3,18 @@ package co.jdti.example.springboot.app.handler;
 import co.jdti.example.springboot.app.models.documents.Producto;
 import co.jdti.example.springboot.app.services.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
 import java.net.URI;
 import java.util.Date;
+import java.util.UUID;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.created;
 import static org.springframework.web.reactive.function.server.ServerResponse.noContent;
@@ -21,6 +25,9 @@ public class ProductoHandler {
 
     @Autowired
     private IProductoService iProductoService;
+
+    @Value("${config.uploads.path}")
+    private String path;
 
     public Mono<ServerResponse> listar(ServerRequest request) {
         return ok()
@@ -43,7 +50,7 @@ public class ProductoHandler {
                 p.setCreatedAt(new Date());
             }
             return iProductoService.save(p);
-        }).flatMap(ps -> created(URI.create("/api/v2/productos/".concat(ps.getId())))
+        }).flatMap(ps -> created(URI.create("/api/v3/productos/".concat(ps.getId())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(ps));
     }
@@ -59,7 +66,7 @@ public class ProductoHandler {
             db.setPrecio(req.getPrecio());
             db.setCategoria(req.getCategoria());
             return db;
-        }).flatMap(p -> created(URI.create("/api/v2/productos/".concat(p.getId())))
+        }).flatMap(p -> created(URI.create("/api/v3/productos/".concat(p.getId())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(iProductoService.save(p), Producto.class))
                 .switchIfEmpty(noContent().build());
@@ -71,6 +78,24 @@ public class ProductoHandler {
         Mono<Producto> productoDb = iProductoService.findById(id);
         return productoDb.flatMap(p -> iProductoService.delete(p)
                 .then(ServerResponse.ok().build()))
+                .switchIfEmpty(noContent().build());
+    }
+
+    public Mono<ServerResponse> upload(ServerRequest request) {
+        String id = request.pathVariable("id");
+        return request.multipartData().map(multipart -> multipart.toSingleValueMap().get("file"))
+                .cast(FilePart.class)
+                .flatMap(file -> iProductoService.findById(id)
+                        .flatMap(p -> {
+                            p.setFoto(UUID.randomUUID().toString() + "_" + file.filename()
+                                    .replace(" ", "-")
+                                    .replace(":", "")
+                                    .replace("\\", ""));
+                            return file.transferTo(new File(path + p.getFoto()))
+                                    .then(iProductoService.save(p));
+                        })).flatMap(p -> created(URI.create("/api/v3/productos/".concat(p.getId())))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(p))
                 .switchIfEmpty(noContent().build());
     }
 }

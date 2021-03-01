@@ -22,6 +22,7 @@ public class RouterFunctionConfig {
                 .andRoute(GET("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::ver)
                 .andRoute(POST("/api/v3/productos").and(contentType(MediaType.APPLICATION_JSON)), handler::crear)
                 .andRoute(PUT("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::editar)
-                .andRoute(DELETE("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::eliminar);
+                .andRoute(DELETE("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::eliminar)
+                .andRoute(POST("/api/v3/productos/upload/{id}"), handler::upload);
     }
 }
