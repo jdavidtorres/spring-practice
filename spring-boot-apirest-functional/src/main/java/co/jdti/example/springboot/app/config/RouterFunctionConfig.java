@@ -19,6 +19,7 @@ public class RouterFunctionConfig {
     public RouterFunction<ServerResponse> routes(ProductoHandler handler) {
         return route(GET("/api/v3/productos").or(GET("/api/v3/productos/all")).and(contentType(MediaType.APPLICATION_JSON)), handler::listar)
                 .andRoute(GET("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::ver)
-                .andRoute(POST("/api/v3/productos").and(contentType(MediaType.APPLICATION_JSON)), handler::crear);
+                .andRoute(POST("/api/v3/productos").and(contentType(MediaType.APPLICATION_JSON)), handler::crear)
+                .andRoute(PUT("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::editar)
     }
 }
