@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.contentType;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -17,6 +18,7 @@ public class RouterFunctionConfig {
     @Bean
     public RouterFunction<ServerResponse> routes(ProductoHandler handler) {
         return route(GET("/api/v3/productos").or(GET("/api/v3/productos/all")).and(contentType(MediaType.APPLICATION_JSON)), handler::listar)
-                .andRoute(GET("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::ver);
+                .andRoute(GET("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::ver)
+                .andRoute(POST("/api/v3/productos").and(contentType(MediaType.APPLICATION_JSON)), handler::crear);
     }
 }
