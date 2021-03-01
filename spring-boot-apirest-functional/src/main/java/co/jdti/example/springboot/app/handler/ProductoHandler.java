@@ -9,8 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.codec.multipart.FormFieldPart;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
@@ -18,6 +22,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 
+import static org.springframework.web.reactive.function.server.ServerResponse.badRequest;
 import static org.springframework.web.reactive.function.server.ServerResponse.created;
 import static org.springframework.web.reactive.function.server.ServerResponse.noContent;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -30,6 +35,9 @@ public class ProductoHandler {
 
     @Value("${config.uploads.path}")
     private String path;
+
+    @Autowired
+    private Validator validator;
 
     public Mono<ServerResponse> listar(ServerRequest request) {
         return ok()
@@ -126,5 +134,27 @@ public class ProductoHandler {
                         })).flatMap(p -> created(URI.create("/api/v3/productos/".concat(p.getId())))
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(p));
+    }
+
+    public Mono<ServerResponse> crearConValidacion(ServerRequest request) {
+        Mono<Producto> productoMono = request.bodyToMono(Producto.class);
+        return productoMono.flatMap(p -> {
+            Errors errors = new BeanPropertyBindingResult(p, Producto.class.getName());
+            validator.validate(p, errors);
+            if (errors.hasErrors()) {
+                return Flux.fromIterable(errors.getFieldErrors())
+                        .map(fieldError -> "El campo " + fieldError.getField() + " " + fieldError.getDefaultMessage())
+                        .collectList()
+                        .flatMap(list -> badRequest()
+                                .bodyValue(list));
+            } else {
+                if (p.getCreatedAt() == null) {
+                    p.setCreatedAt(new Date());
+                }
+                return iProductoService.save(p).flatMap(pdb -> created(URI.create("/api/v3/productos/".concat(pdb.getId())))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(pdb));
+            }
+        });
     }
 }
