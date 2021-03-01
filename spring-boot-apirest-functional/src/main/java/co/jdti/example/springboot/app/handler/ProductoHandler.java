@@ -112,7 +112,6 @@ public class ProductoHandler {
             categoria.setId(categoriaId.value());
             return new Producto(nombre.value(), Double.parseDouble(precio.value()), categoria);
         });
-
         return request.multipartData().map(multipart -> multipart.toSingleValueMap().get("file"))
                 .cast(FilePart.class)
                 .flatMap(file -> producto
