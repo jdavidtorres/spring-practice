@@ -64,4 +64,13 @@ public class ProductoHandler {
                 .body(iProductoService.save(p), Producto.class))
                 .switchIfEmpty(noContent().build());
     }
+
+    public Mono<ServerResponse> eliminar(ServerRequest request) {
+        String id = request.pathVariable("id");
+
+        Mono<Producto> productoDb = iProductoService.findById(id);
+        return productoDb.flatMap(p -> iProductoService.delete(p)
+                .then(ServerResponse.ok().build()))
+                .switchIfEmpty(noContent().build());
+    }
 }

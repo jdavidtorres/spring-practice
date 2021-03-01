@@ -7,8 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
 import static org.springframework.web.reactive.function.server.RequestPredicates.contentType;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -21,5 +22,6 @@ public class RouterFunctionConfig {
                 .andRoute(GET("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::ver)
                 .andRoute(POST("/api/v3/productos").and(contentType(MediaType.APPLICATION_JSON)), handler::crear)
                 .andRoute(PUT("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::editar)
+                .andRoute(DELETE("/api/v3/productos/{id}").and(contentType(MediaType.APPLICATION_JSON)), handler::eliminar);
     }
 }
