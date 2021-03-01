@@ -1,11 +1,13 @@
 package co.jdti.example.springboot.app.handler;
 
+import co.jdti.example.springboot.app.models.documents.Categoria;
 import co.jdti.example.springboot.app.models.documents.Producto;
 import co.jdti.example.springboot.app.services.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.http.codec.multipart.FormFieldPart;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -97,5 +99,33 @@ public class ProductoHandler {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(p))
                 .switchIfEmpty(noContent().build());
+    }
+
+    public Mono<ServerResponse> crearConFoto(ServerRequest request) {
+        Mono<Producto> producto = request.multipartData().map(multipart -> {
+            FormFieldPart nombre = (FormFieldPart) multipart.toSingleValueMap().get("nombre");
+            FormFieldPart precio = (FormFieldPart) multipart.toSingleValueMap().get("precio");
+            FormFieldPart categoriaId = (FormFieldPart) multipart.toSingleValueMap().get("categoria.id");
+            FormFieldPart categoriaNombre = (FormFieldPart) multipart.toSingleValueMap().get("categoria.nombre");
+
+            Categoria categoria = new Categoria(categoriaNombre.value());
+            categoria.setId(categoriaId.value());
+            return new Producto(nombre.value(), Double.parseDouble(precio.value()), categoria);
+        });
+
+        return request.multipartData().map(multipart -> multipart.toSingleValueMap().get("file"))
+                .cast(FilePart.class)
+                .flatMap(file -> producto
+                        .flatMap(p -> {
+                            p.setFoto(UUID.randomUUID().toString() + "_" + file.filename()
+                                    .replace(" ", "-")
+                                    .replace(":", "")
+                                    .replace("\\", ""));
+                            p.setCreatedAt(new Date());
+                            return file.transferTo(new File(path + p.getFoto()))
+                                    .then(iProductoService.save(p));
+                        })).flatMap(p -> created(URI.create("/api/v3/productos/".concat(p.getId())))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(p));
     }
 }
