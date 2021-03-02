@@ -8,6 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SpringBootApirestApplicationTests {
@@ -16,7 +21,7 @@ class SpringBootApirestApplicationTests {
     private WebTestClient client;
 
     @Test
-    void listarTest() {
+    void listarTestOK() {
         client.get()
                 .uri("/api/v3/productos")
                 .accept(MediaType.APPLICATION_JSON)
@@ -24,7 +29,11 @@ class SpringBootApirestApplicationTests {
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBodyList(Producto.class)
-                .hasSize(10);
+                //.hasSize(10)
+                .consumeWith(response -> {
+                    List<Producto> productos = response.getResponseBody();
+                    assertNotNull(productos);
+                    assertTrue(productos.size() > 0);
+                });
     }
-
 }
