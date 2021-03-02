@@ -98,4 +98,24 @@ class SpringBootApirestApplicationTests {
                     assertEquals(producto.getCategoria().getNombre(), p.getCategoria().getNombre());
                 });
     }
+
+    @Test
+    void editarTestOK() {
+        Producto producto = iProductoService.findByNombre("Apple iPod").block();
+        assertNotNull(producto);
+        producto.setNombre("New Apple iPod");
+        client.put()
+                .uri("/api/v3/productos/{id}", Collections.singletonMap("id", producto.getId()))
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(producto)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(Producto.class)
+                .consumeWith(response -> {
+                    Producto p = response.getResponseBody();
+                    assertNotNull(p);
+                    assertEquals(producto.getNombre(), p.getNombre());
+                });
+    }
 }
