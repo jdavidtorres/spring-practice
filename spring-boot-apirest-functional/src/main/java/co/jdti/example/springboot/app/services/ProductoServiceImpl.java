@@ -84,4 +84,9 @@ public class ProductoServiceImpl implements IProductoService {
     public Mono<Producto> obtenerPorNombre(String nombre) {
         return iProductRepository.obtenerPorNombre(nombre);
     }
+
+    @Override
+    public Mono<Categoria> findCategoriaByNombre(String nombre) {
+        return iCategoriaRepository.findByNombre(nombre);
+    }
 }

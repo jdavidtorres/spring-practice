@@ -2,7 +2,6 @@ package co.jdti.example.springboot.app.services;
 
 import co.jdti.example.springboot.app.models.documents.Categoria;
 import co.jdti.example.springboot.app.models.documents.Producto;
-import org.springframework.data.mongodb.repository.Query;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -28,6 +27,7 @@ public interface IProductoService {
 
     Mono<Producto> findByNombre(String nombre);
 
-    @Query("{ 'nombre' : ?0 }")
     Mono<Producto> obtenerPorNombre(String nombre);
+
+    Mono<Categoria> findCategoriaByNombre(String nombre);
 }
