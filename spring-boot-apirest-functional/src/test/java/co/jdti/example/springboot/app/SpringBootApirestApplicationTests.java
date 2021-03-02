@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -117,5 +118,18 @@ class SpringBootApirestApplicationTests {
                     assertNotNull(p);
                     assertEquals(producto.getNombre(), p.getNombre());
                 });
+    }
+
+    @Test
+    void eliminarTestOK() {
+        Producto producto = iProductoService.findByNombre("Multifuncional Hewlett Packard").block();
+        assertNotNull(producto);
+        client.delete()
+                .uri("/api/v3/productos/{id}", Collections.singletonMap("id", producto.getId()))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().isEmpty();
+        Producto productoDeleted = iProductoService.findByNombre("Multifuncional Hewlett Packard").block();
+        assertNull(productoDeleted);
     }
 }
