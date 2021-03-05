@@ -20,13 +20,14 @@ public class StudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
     private String name;
     private String lastname;
     private String email;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
