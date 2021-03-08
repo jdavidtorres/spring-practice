@@ -1,5 +1,6 @@
 package co.jdti.example.microserviciocommons.services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import java.util.Optional;
 public class CommonServicesImpl<E, R extends JpaRepository<E, Long>> implements ICommonServices<E> {
 
     @Autowired
-    private R iRepository;
+    protected R iRepository;
 
     @Override
     @Transactional(readOnly = true)
