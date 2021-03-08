@@ -2,11 +2,13 @@ package co.jdti.example.microserviciocursos.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
+@EnableEurekaClient
 @SpringBootApplication
-public class CursosApplication {
+public class CoursesApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CursosApplication.class, args);
+        SpringApplication.run(CoursesApplication.class, args);
     }
 }
