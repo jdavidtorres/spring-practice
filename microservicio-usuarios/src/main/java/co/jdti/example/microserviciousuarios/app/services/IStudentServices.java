@@ -4,7 +4,7 @@ import co.jdti.example.microserviciousuarios.app.models.entity.StudentEntity;
 
 import java.util.Optional;
 
-public interface IStudentServices {
+public interface IStudentServices extends CommonService<StudentEntity> {
 
     Iterable<StudentEntity> findAll();
 
