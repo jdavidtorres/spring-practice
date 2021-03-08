@@ -1,2 +1,2 @@
-rootProject.name = 'microservices-class'
+rootProject.name = 'microservicios-spring'
 include('microservicio-commons', 'microservicio-usuarios')
