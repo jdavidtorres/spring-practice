@@ -1,7 +1,7 @@
 package co.jdti.example.microserviciocursos.app.controllers;
 
 import co.jdti.example.microserviciocommons.controllers.CommonController;
-import co.jdti.example.microserviciocursos.app.models.entity.CourseEntity;
+import co.jdti.example.microserviciocommons.models.entities.CourseEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
