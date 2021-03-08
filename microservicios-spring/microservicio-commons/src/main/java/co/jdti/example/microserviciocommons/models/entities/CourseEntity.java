@@ -1,4 +1,4 @@
-package co.jdti.example.microserviciocursos.app.models.entity;
+package co.jdti.example.microserviciocommons.models.entities;
 
 import lombok.Data;
 
