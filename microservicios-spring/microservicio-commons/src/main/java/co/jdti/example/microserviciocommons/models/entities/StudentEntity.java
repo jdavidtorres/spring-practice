@@ -23,8 +23,13 @@ public class StudentEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column
     private String name;
+
+    @Column
     private String lastname;
+
+    @Column
     private String email;
 
     @Column(name = "create_at", updatable = false)

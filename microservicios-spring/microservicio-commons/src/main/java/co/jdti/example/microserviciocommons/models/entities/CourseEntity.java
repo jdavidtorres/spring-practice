@@ -28,6 +28,7 @@ public class CourseEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column
     private String name;
 
     @Column(name = "create_at")
