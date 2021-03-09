@@ -6,6 +6,7 @@ import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,5 +48,14 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
         CourseEntity course = obj.get();
         course.removeStudent(student);
         return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<?> findByStudentId(@PathVariable Long id) {
+        CourseEntity courseE = iServices.findCourseByStudentId(id);
+        if (courseE == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(courseE);
     }
 }

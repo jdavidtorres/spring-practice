@@ -4,4 +4,6 @@ import co.jdti.example.microserviciocommons.models.entities.CourseEntity;
 import co.jdti.example.microserviciocommons.services.ICommonServices;
 
 public interface ICourseServices extends ICommonServices<CourseEntity> {
+
+    CourseEntity findCourseByStudentId(Long id);
 }
