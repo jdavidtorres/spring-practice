@@ -2,7 +2,6 @@ package co.jdti.example.microservicioexamenes.app.controllers;
 
 import co.jdti.example.microserviciocommons.controllers.CommonController;
 import co.jdti.example.microservicioexamenes.app.models.entity.ExamEntity;
-import co.jdti.example.microservicioexamenes.app.models.entity.QuestionEntity;
 import co.jdti.example.microservicioexamenes.app.services.IExamServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,13 +22,11 @@ public class ExamController extends CommonController<ExamEntity, IExamServices> 
             return ResponseEntity.noContent().build();
         }
         ExamEntity examDb = obj.get();
-        List<QuestionEntity> deleted = new ArrayList<>();
-        examDb.getQuestionsList().forEach(pdb -> {
-            if (!exam.getQuestionsList().contains(pdb)) {
-                deleted.add(pdb);
-            }
-        });
-        deleted.forEach(examDb::removeQuestion);
+        examDb.setName(exam.getName());
+        examDb.getQuestionsList()
+                .stream()
+                .filter(pdb -> !exam.getQuestionsList().contains(pdb))
+                .forEach(examDb::removeQuestion);
 
         examDb.setQuestionsList(exam.getQuestionsList());
 
