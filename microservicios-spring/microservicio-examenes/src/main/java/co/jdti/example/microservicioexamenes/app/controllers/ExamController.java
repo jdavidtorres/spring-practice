@@ -1,7 +1,7 @@
 package co.jdti.example.microservicioexamenes.app.controllers;
 
 import co.jdti.example.microserviciocommons.controllers.CommonController;
-import co.jdti.example.microservicioexamenes.app.models.entity.ExamEntity;
+import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microservicioexamenes.app.services.IExamServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

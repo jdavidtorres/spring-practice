@@ -1,7 +1,7 @@
 package co.jdti.example.microservicioexamenes.app.services;
 
+import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microserviciocommons.services.CommonServicesImpl;
-import co.jdti.example.microservicioexamenes.app.models.entity.ExamEntity;
 import co.jdti.example.microservicioexamenes.app.models.repositories.IExamRepository;
 import org.springframework.stereotype.Service;
 
