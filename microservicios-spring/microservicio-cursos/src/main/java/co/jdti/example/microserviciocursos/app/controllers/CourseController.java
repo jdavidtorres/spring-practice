@@ -2,6 +2,7 @@ package co.jdti.example.microserviciocursos.app.controllers;
 
 import co.jdti.example.microserviciocommons.controllers.CommonController;
 import co.jdti.example.microserviciocommons.models.entities.CourseEntity;
+import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.http.HttpStatus;
@@ -57,5 +58,27 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(courseE);
+    }
+
+    @PutMapping("{id}/assign-exam")
+    public ResponseEntity<?> assignExam(@PathVariable Long id, @RequestBody List<ExamEntity> exams) {
+        Optional<CourseEntity> obj = iServices.findById(id);
+        if (obj.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        CourseEntity course = obj.get();
+        exams.forEach(course::addExam);
+        return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
+    }
+
+    @PutMapping("{id}/delete-exam")
+    public ResponseEntity<?> deleteExam(@PathVariable Long id, @RequestBody ExamEntity exam) {
+        Optional<CourseEntity> obj = iServices.findById(id);
+        if (obj.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        CourseEntity course = obj.get();
+        course.removeExam(exam);
+        return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
     }
 }

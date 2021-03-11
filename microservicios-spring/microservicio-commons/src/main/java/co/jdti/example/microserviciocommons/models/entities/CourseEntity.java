@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -38,8 +39,12 @@ public class CourseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<StudentEntity> students;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<ExamEntity> exams;
+
     public CourseEntity() {
         this.students = new ArrayList<>();
+        this.exams = new ArrayList<>();
     }
 
     @PrePersist
@@ -53,5 +58,13 @@ public class CourseEntity {
 
     public void removeStudent(StudentEntity student) {
         this.students.remove(student);
+    }
+
+    public void addExam(ExamEntity exam) {
+        this.exams.add(exam);
+    }
+
+    public void removeExam(ExamEntity exam) {
+        this.exams.remove(exam);
     }
 }
