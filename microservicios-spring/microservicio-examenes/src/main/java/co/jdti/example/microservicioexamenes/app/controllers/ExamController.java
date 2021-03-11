@@ -23,10 +23,6 @@ public class ExamController extends CommonController<ExamEntity, IExamServices> 
         }
         ExamEntity examDb = obj.get();
         examDb.setName(exam.getName());
-        examDb.getQuestionsList()
-                .stream()
-                .filter(pdb -> !exam.getQuestionsList().contains(pdb))
-                .forEach(examDb::removeQuestion);
 
         examDb.setQuestionsList(exam.getQuestionsList());
 
