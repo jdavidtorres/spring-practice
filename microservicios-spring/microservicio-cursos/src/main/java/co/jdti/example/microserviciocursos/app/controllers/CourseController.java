@@ -60,7 +60,7 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
         return ResponseEntity.ok(courseE);
     }
 
-    @PutMapping("{id}/assign-exam")
+    @PutMapping("{id}/assign-exams")
     public ResponseEntity<?> assignExam(@PathVariable Long id, @RequestBody List<ExamEntity> exams) {
         Optional<CourseEntity> obj = iServices.findById(id);
         if (obj.isEmpty()) {
