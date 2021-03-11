@@ -5,6 +5,7 @@ import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microservicioexamenes.app.services.IExamServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,5 +28,10 @@ public class ExamController extends CommonController<ExamEntity, IExamServices> 
         examDb.setQuestionsList(exam.getQuestionsList());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(iServices.save(examDb));
+    }
+
+    @GetMapping("/filter/{term}")
+    public ResponseEntity<?> filter(@PathVariable String term) {
+        return ResponseEntity.ok(iServices.findByName(term));
     }
 }
