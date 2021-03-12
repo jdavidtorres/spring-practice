@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -35,6 +36,9 @@ public class ExamEntity {
     @JsonIgnoreProperties(value = "exam", allowSetters = true)
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionEntity> questionsList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SubjectEntity subject;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")

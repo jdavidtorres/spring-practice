@@ -34,4 +34,9 @@ public class ExamController extends CommonController<ExamEntity, IExamServices> 
     public ResponseEntity<?> filter(@PathVariable String term) {
         return ResponseEntity.ok(iServices.findByName(term));
     }
+
+    @GetMapping("/subjects")
+    public ResponseEntity<?> findAllSubjects() {
+        return ResponseEntity.ok(iServices.findAllSubjects());
+    }
 }
