@@ -5,19 +5,24 @@ import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microservicioexamenes.app.services.IExamServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
 public class ExamController extends CommonController<ExamEntity, IExamServices> {
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@RequestBody ExamEntity exam, @PathVariable Long id) {
+    public ResponseEntity<?> edit(@Valid @RequestBody ExamEntity exam, BindingResult result, @PathVariable Long id) {
+        if (result.hasErrors()) {
+            return this.validator(result);
+        }
         Optional<ExamEntity> obj = iServices.findById(id);
         if (obj.isEmpty()) {
             return ResponseEntity.noContent().build();

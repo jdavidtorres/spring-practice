@@ -11,6 +11,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -23,12 +25,16 @@ public class StudentEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @NotEmpty
     @Column
     private String name;
 
+    @NotEmpty
     @Column
     private String lastname;
 
+    @NotEmpty
+    @Email
     @Column
     private String email;
 

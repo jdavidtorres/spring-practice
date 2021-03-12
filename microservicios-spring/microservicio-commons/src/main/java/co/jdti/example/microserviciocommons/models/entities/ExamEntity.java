@@ -16,6 +16,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ExamEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @NotEmpty
     @Column
     private String name;
 
@@ -37,6 +40,7 @@ public class ExamEntity {
     @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionEntity> questionsList;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private SubjectEntity subject;
 

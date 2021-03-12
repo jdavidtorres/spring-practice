@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class CourseEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @NotEmpty
     @Column
     private String name;
 

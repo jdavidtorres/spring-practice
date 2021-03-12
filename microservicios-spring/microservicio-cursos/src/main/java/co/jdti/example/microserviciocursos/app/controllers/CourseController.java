@@ -7,12 +7,14 @@ import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,10 @@ import java.util.Optional;
 public class CourseController extends CommonController<CourseEntity, ICourseServices> {
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@RequestBody CourseEntity courseEntity, @PathVariable Long id) {
+    public ResponseEntity<?> edit(@Valid @RequestBody CourseEntity courseEntity, BindingResult result, @PathVariable Long id) {
+        if (result.hasErrors()) {
+            return this.validator(result);
+        }
         Optional<CourseEntity> obj = iServices.findById(id);
         if (obj.isEmpty()) {
             return ResponseEntity.notFound().build();

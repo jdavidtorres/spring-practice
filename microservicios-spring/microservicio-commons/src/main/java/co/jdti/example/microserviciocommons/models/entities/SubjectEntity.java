@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class SubjectEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @NotEmpty
     @Column
     private String name;
 
