@@ -2,6 +2,7 @@ package co.jdti.example.microserviciocommons.controllers;
 
 import co.jdti.example.microserviciocommons.services.ICommonServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,8 +23,13 @@ public class CommonController<E, S extends ICommonServices<E>> {
     protected S iServices;
 
     @GetMapping
-    public ResponseEntity<Iterable<E>> listAll() {
+    public ResponseEntity<?> listAll() {
         return ResponseEntity.ok().body(iServices.findAll());
+    }
+
+    @GetMapping("/paginable")
+    public ResponseEntity<?> listAll(Pageable pageable) {
+        return ResponseEntity.ok().body(iServices.findAll(pageable));
     }
 
     @GetMapping("/{id}")
