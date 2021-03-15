@@ -1,5 +1,6 @@
 package co.jdti.example.microserviciocommons.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,8 +44,16 @@ public class StudentEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
+    @Lob
+    @JsonIgnore
+    private byte[] photo;
+
     @PrePersist
     private void prePersist() {
         createAt = new Date();
+    }
+
+    public Integer getPhotoHashCode() {
+        return this.photo != null ? this.photo.hashCode() : null;
     }
 }
