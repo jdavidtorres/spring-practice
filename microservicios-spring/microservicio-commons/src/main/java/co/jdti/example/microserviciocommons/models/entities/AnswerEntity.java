@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -32,15 +31,4 @@ public class AnswerEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     private QuestionEntity question;
-
-    @Transient
-    private boolean answered;
-
-    public boolean isAnswered() {
-        return answered;
-    }
-
-    public void setAnswered(boolean answered) {
-        this.answered = answered;
-    }
 }

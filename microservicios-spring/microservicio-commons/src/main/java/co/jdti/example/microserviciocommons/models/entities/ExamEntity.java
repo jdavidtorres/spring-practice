@@ -16,6 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class ExamEntity {
     @Column(name = "create_at")
     private Date createAt;
 
+    @Transient
+    private boolean answered;
+
     public ExamEntity() {
         this.questionsList = new ArrayList<>();
     }
@@ -70,5 +74,13 @@ public class ExamEntity {
     public void removeQuestion(QuestionEntity question) {
         this.questionsList.remove(question);
         question.setExam(null);
+    }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
     }
 }
