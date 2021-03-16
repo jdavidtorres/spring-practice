@@ -2,11 +2,16 @@ plugins {
     id 'org.springframework.boot' version '2.3.9.RELEASE'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'application'
 }
 
 group = 'co.jdti.example'
 version = '0.0.1'
 sourceCompatibility = '11'
+
+jar {
+    enabled = true
+}
 
 ext {
     set('springCloudVersion', "Hoxton.SR10")
