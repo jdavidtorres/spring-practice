@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+jar {
+    enabled = false
+}
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}

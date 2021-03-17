@@ -1,0 +1,2 @@
+rootProject.name = 'microservicios-spring'
+include('microservicio-commons', 'microservicio-usuarios', 'microservicio-eureka', 'microservicio-zuul', 'microservicio-cursos', 'microservicio-examenes', 'microservicio-answers', 'microservicio-gateway')
