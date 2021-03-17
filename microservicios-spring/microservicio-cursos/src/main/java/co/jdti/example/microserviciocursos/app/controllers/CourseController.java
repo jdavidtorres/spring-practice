@@ -5,6 +5,7 @@ import co.jdti.example.microserviciocommons.models.entities.CourseEntity;
 import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 public class CourseController extends CommonController<CourseEntity, ICourseServices> {
+
+    @Value("${config.balancer.test}")
+    private String balancer;
 
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@Valid @RequestBody CourseEntity courseEntity, BindingResult result, @PathVariable Long id) {
@@ -95,5 +101,13 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
         CourseEntity course = obj.get();
         course.removeExam(exam);
         return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
+    }
+
+    @GetMapping("/balancer")
+    public ResponseEntity<?> listAllWithBalancer() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("balancer", balancer);
+        response.put("courses", iServices.findAll());
+        return ResponseEntity.ok(response);
     }
 }
