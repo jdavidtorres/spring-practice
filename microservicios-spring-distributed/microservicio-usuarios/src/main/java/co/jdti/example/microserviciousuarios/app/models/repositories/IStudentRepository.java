@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface IStudentRepository extends JpaRepository<StudentEntity, Long> {
 
-    @Query("select a from StudentEntity a where a.name like %?1% or a.lastname like %?1%")
+    @Query("select s from StudentEntity s where upper(s.name) like %?1% or upper(s.lastname) like %?1%")
     List<StudentEntity> findByNameOrLastname(String term);
 }

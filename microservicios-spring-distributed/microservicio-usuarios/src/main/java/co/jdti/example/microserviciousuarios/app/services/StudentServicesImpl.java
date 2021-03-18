@@ -14,7 +14,7 @@ public class StudentServicesImpl extends CommonServicesImpl<StudentEntity, IStud
     @Override
     @Transactional(readOnly = true)
     public List<StudentEntity> findByNameOrLastname(String term) {
-        return iRepository.findByNameOrLastname(term);
+        return iRepository.findByNameOrLastname(term.toUpperCase());
     }
 
     @Override
