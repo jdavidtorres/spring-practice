@@ -36,4 +36,10 @@ public class CourseServicesImpl extends CommonServicesImpl<CourseEntity, ICourse
     public List<StudentEntity> getStudentsByCourse(List<Long> ids) {
         return iStudentFeignClient.getStudentsByCourse(ids);
     }
+
+    @Override
+    @Transactional
+    public void deleteCourseStudentById(Long id) {
+        iRepository.deleteCourseStudentById(id);
+    }
 }

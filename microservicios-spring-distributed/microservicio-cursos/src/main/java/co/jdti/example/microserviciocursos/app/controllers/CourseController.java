@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -170,5 +171,15 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
                     return course;
                 });
         return ResponseEntity.ok().body(courses);
+    }
+
+    @DeleteMapping("/delete-student/{id}")
+    public ResponseEntity<?> deleteCourseStudentById(@PathVariable Long id) {
+        Optional<CourseEntity> obj = iServices.findById(id);
+        if (obj.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        iServices.deleteCourseStudentById(id);
+        return ResponseEntity.ok().build();
     }
 }

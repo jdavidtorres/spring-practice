@@ -13,4 +13,6 @@ public interface ICourseServices extends ICommonServices<CourseEntity> {
     Iterable<Long> findExamsIdAnsweredByStudent(Long studentId);
 
     List<StudentEntity> getStudentsByCourse(List<Long> ids);
+
+    void deleteCourseStudentById(Long id);
 }
