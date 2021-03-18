@@ -118,4 +118,21 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
         response.put("courses", iServices.findAll());
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<?> listAll() {
+        List<CourseEntity> courses = iServices.findAll().stream()
+                .map(course -> {
+                    course.getCourseStudentList().forEach(
+                            courseStudent -> {
+                                StudentEntity student = new StudentEntity();
+                                student.setId(courseStudent.getId());
+                                course.addStudent(student);
+                            }
+                    );
+                    return course;
+                }).collect(Collectors.toList());
+        return ResponseEntity.ok().body(courses);
+    }
 }
