@@ -27,7 +27,7 @@ public class CommonController<E, S extends ICommonServices<E>> {
         return ResponseEntity.ok().body(iServices.findAll());
     }
 
-    @GetMapping("/paginable")
+    @GetMapping("/pageable")
     public ResponseEntity<?> listAll(Pageable pageable) {
         return ResponseEntity.ok().body(iServices.findAll(pageable));
     }
