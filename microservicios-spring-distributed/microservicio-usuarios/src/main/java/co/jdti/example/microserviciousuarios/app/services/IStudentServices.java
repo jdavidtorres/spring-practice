@@ -17,4 +17,6 @@ public interface IStudentServices extends ICommonServices<StudentEntity> {
     void deleteById(Long id);
 
     List<StudentEntity> findByNameOrLastname(String term);
+
+    List<StudentEntity> findAllByIds(List<Long> ids);
 }

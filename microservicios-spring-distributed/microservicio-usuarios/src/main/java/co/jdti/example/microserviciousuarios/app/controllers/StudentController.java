@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -77,5 +78,11 @@ public class StudentController extends CommonController<StudentEntity, IStudentS
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(img);
+    }
+
+    @GetMapping("/students-course")
+    public ResponseEntity<?> getStudentsByCourse(@RequestParam List<Long> ids) {
+        return ResponseEntity.ok()
+                .body(iServices.findAllByIds(ids));
     }
 }

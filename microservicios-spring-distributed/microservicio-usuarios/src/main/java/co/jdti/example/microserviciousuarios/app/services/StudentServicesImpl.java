@@ -16,4 +16,10 @@ public class StudentServicesImpl extends CommonServicesImpl<StudentEntity, IStud
     public List<StudentEntity> findByNameOrLastname(String term) {
         return iRepository.findByNameOrLastname(term);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<StudentEntity> findAllByIds(List<Long> ids) {
+        return iRepository.findAllById(ids);
+    }
 }
