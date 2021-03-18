@@ -7,6 +7,8 @@ import co.jdti.example.microserviciocursos.app.models.entities.CourseEntity;
 import co.jdti.example.microserviciocursos.app.models.entities.CourseStudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -151,5 +153,22 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
             course.setStudents(iServices.getStudentsByCourse(ids));
         }
         return ResponseEntity.ok().body(course);
+    }
+
+    @Override
+    @GetMapping("/pageable")
+    public ResponseEntity<?> listAll(Pageable pageable) {
+        Page<CourseEntity> courses = iServices.findAll(pageable)
+                .map(course -> {
+                    course.getCourseStudentList().forEach(
+                            courseStudent -> {
+                                StudentEntity student = new StudentEntity();
+                                student.setId(courseStudent.getId());
+                                course.addStudent(student);
+                            }
+                    );
+                    return course;
+                });
+        return ResponseEntity.ok().body(courses);
     }
 }
