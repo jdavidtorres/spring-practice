@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CommonServicesImpl<E, R extends JpaRepository<E, Long>> implements ICommonServices<E> {
@@ -16,7 +17,7 @@ public class CommonServicesImpl<E, R extends JpaRepository<E, Long>> implements 
 
     @Override
     @Transactional(readOnly = true)
-    public Iterable<E> findAll() {
+    public List<E> findAll() {
         return iRepository.findAll();
     }
 
