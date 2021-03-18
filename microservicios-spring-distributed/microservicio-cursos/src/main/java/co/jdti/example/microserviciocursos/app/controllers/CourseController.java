@@ -4,6 +4,7 @@ import co.jdti.example.microserviciocommons.controllers.CommonController;
 import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
 import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.models.entities.CourseEntity;
+import co.jdti.example.microserviciocursos.app.models.entities.CourseStudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,12 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
             return ResponseEntity.noContent().build();
         }
         CourseEntity course = obj.get();
-        students.forEach(course::addStudent);
+        students.forEach(student -> {
+            CourseStudentEntity courseStudent = new CourseStudentEntity();
+            courseStudent.setStudentId(student.getId());
+            courseStudent.setCourse(course);
+            course.addCourseStudent(courseStudent);
+        });
         return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
     }
 
@@ -59,7 +65,9 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
             return ResponseEntity.noContent().build();
         }
         CourseEntity course = obj.get();
-        course.removeStudent(student);
+        CourseStudentEntity courseStudent = new CourseStudentEntity();
+        courseStudent.setStudentId(student.getId());
+        course.removeCourseStudent(courseStudent);
         return ResponseEntity.status(HttpStatus.OK).body(iServices.save(course));
     }
 

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICourseRepository extends JpaRepository<CourseEntity, Long> {
 
-    @Query("select c from CourseEntity c join fetch c.students a where a.id=?1")
+    @Query("select c from CourseEntity c join fetch c.courseStudentList cs where cs.studentId=?1")
     CourseEntity findCourseByStudentId(Long id);
 }

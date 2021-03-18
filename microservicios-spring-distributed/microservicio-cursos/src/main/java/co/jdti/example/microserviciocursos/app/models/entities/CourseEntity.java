@@ -42,7 +42,7 @@ public class CourseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
-    @JsonIgnoreProperties(value = "courseStudentList", allowSetters = true)
+    @JsonIgnoreProperties(value = "course", allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
     private List<CourseStudentEntity> courseStudentList;
 

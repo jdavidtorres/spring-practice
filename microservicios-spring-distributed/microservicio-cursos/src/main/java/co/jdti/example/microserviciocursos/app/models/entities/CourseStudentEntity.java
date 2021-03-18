@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "course_students")
 @Data
 public class CourseStudentEntity {
 
