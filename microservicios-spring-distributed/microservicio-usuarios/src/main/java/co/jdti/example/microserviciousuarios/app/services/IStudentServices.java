@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IStudentServices extends ICommonServices<StudentEntity> {
 
-    Iterable<StudentEntity> findAll();
+    List<StudentEntity> findAll();
 
     Optional<StudentEntity> findById(Long id);
 
