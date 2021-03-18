@@ -135,4 +135,21 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
                 }).collect(Collectors.toList());
         return ResponseEntity.ok().body(courses);
     }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<?> detail(@PathVariable Long id) {
+        Optional<CourseEntity> obj = iServices.findById(id);
+        if (obj.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        CourseEntity course = obj.get();
+        if (!course.getCourseStudentList().isEmpty()) {
+            List<Long> ids = course.getCourseStudentList().stream()
+                    .map(CourseStudentEntity::getStudentId)
+                    .collect(Collectors.toList());
+            course.setStudents(iServices.getStudentsByCourse(ids));
+        }
+        return ResponseEntity.ok().body(course);
+    }
 }
