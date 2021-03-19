@@ -1,2 +1,2 @@
 rootProject.name = 'microservicios-spring-distributed'
-include('microservicio-commons', 'microservicio-usuarios', 'microservicio-eureka', 'microservicio-zuul', 'microservicio-cursos', 'microservicio-examenes', 'microservicio-answers', 'microservicio-gateway')
+include('microservicio-commons', 'microservicio-usuarios', 'microservicio-eureka', 'microservicio-cursos', 'microservicio-examenes', 'microservicio-answers', 'microservicio-gateway')
