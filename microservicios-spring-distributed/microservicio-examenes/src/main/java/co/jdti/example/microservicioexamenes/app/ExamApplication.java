@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@EntityScan("co.jdti.example.microserviciocommons.models.entities")
+@EntityScan("co.jdti.example.commons.exam.models.entities")
 @EnableEurekaClient
 @SpringBootApplication
 public class ExamApplication {
