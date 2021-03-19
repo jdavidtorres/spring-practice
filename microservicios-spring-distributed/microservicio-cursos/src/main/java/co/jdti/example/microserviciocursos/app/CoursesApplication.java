@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EntityScan({"co.jdti.example.microserviciocommons.models.entities",
+@EntityScan({"co.jdti.example.commons.exam.models.entities",
         "co.jdti.example.microserviciocursos.app.models.entities"})
 @EnableEurekaClient
 @EnableFeignClients

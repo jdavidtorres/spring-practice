@@ -1,6 +1,6 @@
 package co.jdti.example.microserviciocursos.app.services;
 
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import co.jdti.example.microserviciocommons.services.CommonServicesImpl;
 import co.jdti.example.microserviciocursos.app.clients.IAnswerFeignClient;
 import co.jdti.example.microserviciocursos.app.clients.IStudentFeignClient;
@@ -28,7 +28,7 @@ public class CourseServicesImpl extends CommonServicesImpl<CourseEntity, ICourse
     }
 
     @Override
-    public Iterable<Long> findExamsIdAnsweredByStudent(Long studentId) {
+    public List<Long> findExamsIdAnsweredByStudent(Long studentId) {
         return iAnswerFeignClient.findExamsIdAnsweredByStudent(studentId);
     }
 

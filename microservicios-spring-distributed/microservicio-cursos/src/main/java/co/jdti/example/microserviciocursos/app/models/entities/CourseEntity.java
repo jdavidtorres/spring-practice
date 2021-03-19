@@ -1,7 +1,7 @@
 package co.jdti.example.microserviciocursos.app.models.entities;
 
-import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
+import co.jdti.example.commons.exam.models.entities.ExamEntity;
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 

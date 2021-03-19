@@ -1,8 +1,8 @@
 package co.jdti.example.microserviciocursos.app.controllers;
 
+import co.jdti.example.commons.exam.models.entities.ExamEntity;
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import co.jdti.example.microserviciocommons.controllers.CommonController;
-import co.jdti.example.microserviciocommons.models.entities.ExamEntity;
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciocursos.app.models.entities.CourseEntity;
 import co.jdti.example.microserviciocursos.app.models.entities.CourseStudentEntity;
 import co.jdti.example.microserviciocursos.app.services.ICourseServices;
