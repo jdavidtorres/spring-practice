@@ -1,4 +1,4 @@
-package co.jdti.example.microserviciocommons.models.entities;
+package co.jdti.example.commons.student.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
