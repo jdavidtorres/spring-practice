@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AnswerServicesImpl implements IAnswerServices {
 
@@ -14,18 +16,18 @@ public class AnswerServicesImpl implements IAnswerServices {
 
     @Override
     @Transactional
-    public Iterable<AnswerEntity> saveAll(Iterable<AnswerEntity> answers) {
+    public List<AnswerEntity> saveAll(List<AnswerEntity> answers) {
         return iAnswerRepository.saveAll(answers);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Iterable<AnswerEntity> findByStudentByExam(Long studentId, Long examId) {
+    public List<AnswerEntity> findByStudentByExam(Long studentId, Long examId) {
         return iAnswerRepository.findByStudentByExam(studentId, examId);
     }
 
     @Override
-    public Iterable<Long> findExamsIdAnsweredByStudent(Long studentId) {
+    public List<Long> findExamsIdAnsweredByStudent(Long studentId) {
         return iAnswerRepository.findExamsIdAnsweredByStudent(studentId);
     }
 }

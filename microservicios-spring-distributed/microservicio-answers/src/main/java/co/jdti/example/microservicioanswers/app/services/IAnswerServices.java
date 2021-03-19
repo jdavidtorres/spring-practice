@@ -2,11 +2,13 @@ package co.jdti.example.microservicioanswers.app.services;
 
 import co.jdti.example.microserviciocommons.models.entities.AnswerEntity;
 
+import java.util.List;
+
 public interface IAnswerServices {
 
-    Iterable<AnswerEntity> saveAll(Iterable<AnswerEntity> answers);
+    List<AnswerEntity> saveAll(List<AnswerEntity> answers);
 
-    Iterable<AnswerEntity> findByStudentByExam(Long studentId, Long examId);
+    List<AnswerEntity> findByStudentByExam(Long studentId, Long examId);
 
-    Iterable<Long> findExamsIdAnsweredByStudent(Long studentId);
+    List<Long> findExamsIdAnsweredByStudent(Long studentId);
 }

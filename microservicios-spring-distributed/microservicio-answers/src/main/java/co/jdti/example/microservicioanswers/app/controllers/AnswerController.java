@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class AnswerController {
 
@@ -18,7 +21,12 @@ public class AnswerController {
     private IAnswerServices iAnswerServices;
 
     @PostMapping
-    public ResponseEntity<?> saveAll(@RequestBody Iterable<AnswerEntity> answers) {
+    public ResponseEntity<?> saveAll(@RequestBody List<AnswerEntity> answers) {
+        answers = answers.stream()
+                .map(r -> {
+                    r.setStudentId(r.getStudent().getId());
+                    return r;
+                }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.CREATED).body(iAnswerServices.saveAll(answers));
     }
 
