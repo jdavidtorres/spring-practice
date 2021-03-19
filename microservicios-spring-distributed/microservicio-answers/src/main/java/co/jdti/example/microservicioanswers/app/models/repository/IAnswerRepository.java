@@ -1,6 +1,6 @@
 package co.jdti.example.microservicioanswers.app.models.repository;
 
-import co.jdti.example.microserviciocommons.models.entities.AnswerEntity;
+import co.jdti.example.microservicioanswers.app.models.entities.AnswerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

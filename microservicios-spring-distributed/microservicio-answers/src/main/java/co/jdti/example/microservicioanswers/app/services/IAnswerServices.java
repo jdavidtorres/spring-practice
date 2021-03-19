@@ -1,6 +1,6 @@
 package co.jdti.example.microservicioanswers.app.services;
 
-import co.jdti.example.microserviciocommons.models.entities.AnswerEntity;
+import co.jdti.example.microservicioanswers.app.models.entities.AnswerEntity;
 
 import java.util.List;
 

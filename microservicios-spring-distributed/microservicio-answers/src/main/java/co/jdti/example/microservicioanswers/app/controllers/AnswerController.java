@@ -1,7 +1,7 @@
 package co.jdti.example.microservicioanswers.app.controllers;
 
+import co.jdti.example.microservicioanswers.app.models.entities.AnswerEntity;
 import co.jdti.example.microservicioanswers.app.services.IAnswerServices;
-import co.jdti.example.microserviciocommons.models.entities.AnswerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +27,7 @@ public class AnswerController {
                     r.setStudentId(r.getStudent().getId());
                     return r;
                 }).collect(Collectors.toList());
+       // answers.forEach(answerEntity -> answerEntity.setStudentId(answerEntity.getStudent().getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(iAnswerServices.saveAll(answers));
     }
 

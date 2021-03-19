@@ -1,7 +1,7 @@
 package co.jdti.example.microservicioanswers.app.models.entities;
 
-import co.jdti.example.microserviciocommons.models.entities.QuestionEntity;
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
+import co.jdti.example.commons.exam.models.entities.QuestionEntity;
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import lombok.Data;
 
 import javax.persistence.Column;
