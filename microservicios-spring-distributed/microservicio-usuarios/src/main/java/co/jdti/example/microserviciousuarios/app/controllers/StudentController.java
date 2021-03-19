@@ -1,7 +1,7 @@
 package co.jdti.example.microserviciousuarios.app.controllers;
 
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import co.jdti.example.microserviciocommons.controllers.CommonController;
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
 import co.jdti.example.microserviciousuarios.app.services.IStudentServices;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

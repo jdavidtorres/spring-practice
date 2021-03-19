@@ -30,6 +30,7 @@ dependencies {
 
     runtimeOnly 'org.postgresql:postgresql'
     implementation project(':microservicio-commons')
+    implementation project(':commons-student')
 }
 
 dependencyManagement {

@@ -1,6 +1,6 @@
 package co.jdti.example.microserviciousuarios.app.services;
 
-import co.jdti.example.microserviciocommons.models.entities.StudentEntity;
+import co.jdti.example.commons.student.models.entities.StudentEntity;
 import co.jdti.example.microserviciocommons.services.ICommonServices;
 
 import java.util.List;

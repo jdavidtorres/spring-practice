@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
-@EntityScan("co.jdti.example.microserviciocommons.models.entities")
+@EntityScan("co.jdti.example.commons.student.models.entities")
 @EnableEurekaClient
 @SpringBootApplication
 public class StudentApplication {
