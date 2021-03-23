@@ -34,6 +34,6 @@ public class AnswerEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private QuestionEntity question;
 
-    @Column(name = "student_id", unique = true)
+    @Column(name = "student_id")
     private Long studentId;
 }

@@ -31,11 +31,11 @@ public class SubjectEntity {
     @Column
     private String name;
 
-    @JsonIgnoreProperties(value = "sons", allowSetters = true)
+    @JsonIgnoreProperties(value = {"sons", "handler", "hibernateLazyInitializer"}, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private SubjectEntity father;
 
-    @JsonIgnoreProperties(value = "father", allowSetters = true)
+    @JsonIgnoreProperties(value = {"father", "handler", "hibernateLazyInitializer"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "father", cascade = CascadeType.ALL)
     private List<SubjectEntity> sons;
 
