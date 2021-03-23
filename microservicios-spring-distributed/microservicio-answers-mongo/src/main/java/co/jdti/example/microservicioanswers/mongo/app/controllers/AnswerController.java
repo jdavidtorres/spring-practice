@@ -25,9 +25,9 @@ public class AnswerController {
         answers = answers.stream()
                 .map(r -> {
                     r.setStudentId(r.getStudent().getId());
+                    r.setQuestionId(r.getQuestion().getId());
                     return r;
                 }).collect(Collectors.toList());
-        // answers.forEach(answerEntity -> answerEntity.setStudentId(answerEntity.getStudent().getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(iAnswerServices.saveAll(answers));
     }
 
