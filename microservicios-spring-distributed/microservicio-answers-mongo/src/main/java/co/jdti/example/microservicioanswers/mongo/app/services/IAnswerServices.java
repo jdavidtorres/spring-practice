@@ -12,4 +12,6 @@ public interface IAnswerServices {
     List<AnswerEntity> findByStudentByExam(Long studentId, Long examId);
 
     List<Long> findExamsIdAnsweredByStudent(Long studentId);
+
+    List<AnswerEntity>findByStudentId(Long studentId);
 }

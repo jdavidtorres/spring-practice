@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -43,5 +45,10 @@ public class ExamController extends CommonController<ExamEntity, IExamServices> 
     @GetMapping("/subjects")
     public ResponseEntity<?> findAllSubjects() {
         return ResponseEntity.ok(iServices.findAllSubjects());
+    }
+
+    @GetMapping("/answered")
+    public ResponseEntity<?> findExamsIdsAnsweredByQuestionsIds(@RequestParam List<Long> questionsIds) {
+        return ResponseEntity.ok(iServices.findExamsIdsAnsweredByQuestionsIds(questionsIds));
     }
 }

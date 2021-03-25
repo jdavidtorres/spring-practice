@@ -80,14 +80,16 @@ public class CourseController extends CommonController<CourseEntity, ICourseServ
         if (courseE == null) {
             return ResponseEntity.noContent().build();
         } else {
-            List<Long> examsId = (List<Long>) iServices.findExamsIdAnsweredByStudent(id);
-            List<ExamEntity> exams = courseE.getExams().stream().map(exam -> {
-                if (examsId.contains(exam.getId())) {
-                    exam.setAnswered(true);
-                }
-                return exam;
-            }).collect(Collectors.toList());
-            courseE.setExams(exams);
+            List<Long> examsIds = iServices.findExamsIdAnsweredByStudent(id);
+            if (examsIds != null && !examsIds.isEmpty()) {
+                List<ExamEntity> exams = courseE.getExams().stream().map(exam -> {
+                    if (examsIds.contains(exam.getId())) {
+                        exam.setAnswered(true);
+                    }
+                    return exam;
+                }).collect(Collectors.toList());
+                courseE.setExams(exams);
+            }
         }
         return ResponseEntity.ok(courseE);
     }

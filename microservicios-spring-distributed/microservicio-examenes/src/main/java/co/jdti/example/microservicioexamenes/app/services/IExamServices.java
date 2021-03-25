@@ -11,4 +11,6 @@ public interface IExamServices extends ICommonServices<ExamEntity> {
     List<ExamEntity> findByName(String term);
 
     List<SubjectEntity> findAllSubjects();
+
+    List<Long> findExamsIdsAnsweredByQuestionsIds(List<Long> questionsIds);
 }

@@ -8,6 +8,7 @@ import co.jdti.example.microservicioanswers.mongo.app.models.repository.IAnswerR
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,19 @@ public class AnswerServicesImpl implements IAnswerServices {
 
     @Override
     public List<Long> findExamsIdAnsweredByStudent(Long studentId) {
-        return null;// iAnswerRepository.findExamsIdAnsweredByStudent(studentId);
+        List<AnswerEntity> answers = iAnswerRepository.findByStudentId(studentId);
+        List<Long> examsIds = new ArrayList<>();
+        if (!answers.isEmpty()) {
+            List<Long> answersIds = answers.stream()
+                    .map(AnswerEntity::getQuestionId)
+                    .collect(Collectors.toList());
+            examsIds = iExamFeignClient.findExamsIdsAnsweredByQuestionsIds(answersIds);
+        }
+        return examsIds;
+    }
+
+    @Override
+    public List<AnswerEntity> findByStudentId(Long studentId) {
+        return iAnswerRepository.findByStudentId(studentId);
     }
 }

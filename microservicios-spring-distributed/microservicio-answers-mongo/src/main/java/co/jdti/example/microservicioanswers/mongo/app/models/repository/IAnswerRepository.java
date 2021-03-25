@@ -12,4 +12,7 @@ public interface IAnswerRepository extends MongoRepository<AnswerEntity, String>
 
     @Query("{'studentId' : ?0, 'questionId':{$in:?1}}")
     List<AnswerEntity> findAnswerEntitiesByStudentByQuestionId(Long studentId, List<Long> questionIds);
+
+    @Query("{'studentId' : ?0}")
+    List<AnswerEntity> findByStudentId(Long studentId);
 }

@@ -28,4 +28,10 @@ public class ExamServicesImpl extends CommonServicesImpl<ExamEntity, IExamReposi
     public List<SubjectEntity> findAllSubjects() {
         return iSubjectRepository.findAll();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> findExamsIdsAnsweredByQuestionsIds(List<Long> questionsIds) {
+        return iRepository.findExamsIdsAnsweredByQuestionsIds(questionsIds);
+    }
 }
