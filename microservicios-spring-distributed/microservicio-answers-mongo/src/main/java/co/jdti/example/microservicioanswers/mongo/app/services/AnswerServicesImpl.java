@@ -1,6 +1,5 @@
 package co.jdti.example.microservicioanswers.mongo.app.services;
 
-import co.jdti.example.microservicioanswers.mongo.app.clients.IExamFeignClient;
 import co.jdti.example.microservicioanswers.mongo.app.models.entities.AnswerEntity;
 import co.jdti.example.microservicioanswers.mongo.app.models.repository.IAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,6 @@ public class AnswerServicesImpl implements IAnswerServices {
 
     @Autowired
     private IAnswerRepository iAnswerRepository;
-
-    @Autowired
-    private IExamFeignClient iExamFeignClient;
 
     @Override
     public List<AnswerEntity> saveAll(List<AnswerEntity> answers) {
@@ -37,10 +33,5 @@ public class AnswerServicesImpl implements IAnswerServices {
                 .map(answer -> answer.getQuestion().getExam().getId())
                 .distinct()
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AnswerEntity> findByStudentId(Long studentId) {
-        return iAnswerRepository.findByStudentId(studentId);
     }
 }

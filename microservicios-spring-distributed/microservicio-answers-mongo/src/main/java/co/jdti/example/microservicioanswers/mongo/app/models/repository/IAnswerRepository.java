@@ -10,12 +10,6 @@ import java.util.List;
 @Repository
 public interface IAnswerRepository extends MongoRepository<AnswerEntity, String> {
 
-    @Query("{'studentId' : ?0, 'questionId':{$in:?1}}")
-    List<AnswerEntity> findAnswerEntitiesByStudentByQuestionId(Long studentId, List<Long> questionIds);
-
-    @Query("{'studentId' : ?0}")
-    List<AnswerEntity> findByStudentId(Long studentId);
-
     @Query("{'studentId' : ?0, 'question.exam.id' : ?1}")
     List<AnswerEntity> findAnswerByStudentAndExam(Long studentId, Long examId);
 
