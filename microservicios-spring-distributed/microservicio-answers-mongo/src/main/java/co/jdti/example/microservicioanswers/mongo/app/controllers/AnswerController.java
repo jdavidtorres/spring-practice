@@ -38,6 +38,6 @@ public class AnswerController {
 
     @GetMapping("/student/{studentId}/answered-exam")
     public ResponseEntity<?> findExamsIdAnsweredByStudent(@PathVariable Long studentId) {
-        return ResponseEntity.ok(iAnswerServices.findExamsIdAnsweredByStudent(studentId));
+        return ResponseEntity.ok(iAnswerServices.findExamsIdsAnsweredByStudent(studentId));
     }
 }

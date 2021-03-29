@@ -44,7 +44,7 @@ public class AnswerServicesImpl implements IAnswerServices {
     }
 
     @Override
-    public List<Long> findExamsIdAnsweredByStudent(Long studentId) {
+    public List<Long> findExamsIdsAnsweredByStudent(Long studentId) {
         List<AnswerEntity> answers = iAnswerRepository.findByStudentId(studentId);
         List<Long> examsIds = new ArrayList<>();
         if (!answers.isEmpty()) {
