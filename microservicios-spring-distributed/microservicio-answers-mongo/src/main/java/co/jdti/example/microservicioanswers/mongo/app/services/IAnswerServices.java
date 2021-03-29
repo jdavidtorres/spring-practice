@@ -9,7 +9,7 @@ public interface IAnswerServices {
 
     List<AnswerEntity> saveAll(List<AnswerEntity> answers);
 
-    List<AnswerEntity> findByStudentByExam(Long studentId, Long examId);
+    List<AnswerEntity> findAnswerByStudentByExam(Long studentId, Long examId);
 
     List<Long> findExamsIdAnsweredByStudent(Long studentId);
 

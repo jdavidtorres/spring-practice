@@ -27,7 +27,7 @@ public class AnswerServicesImpl implements IAnswerServices {
     }
 
     @Override
-    public List<AnswerEntity> findByStudentByExam(Long studentId, Long examId) {
+    public List<AnswerEntity> findAnswerByStudentByExam(Long studentId, Long examId) {
         ExamEntity exam = iExamFeignClient.getExamById(examId);
         List<QuestionEntity> questions = exam.getQuestionsList();
         List<Long> questionsIds = questions.stream().map(QuestionEntity::getId).collect(Collectors.toList());
