@@ -15,4 +15,10 @@ public interface IAnswerRepository extends MongoRepository<AnswerEntity, String>
 
     @Query("{'studentId' : ?0}")
     List<AnswerEntity> findByStudentId(Long studentId);
+
+    @Query("{'studentId' : ?0, 'question.exam.id' : ?1}")
+    List<AnswerEntity> findAnswerByStudentAndExam(Long studentId, Long examId);
+
+    @Query(value = "{'studentId' : ?0}", fields = "{'question.exam.id' : 1}")
+    List<AnswerEntity> findExamsIdsWithAnswerByStudent(Long studentId);
 }

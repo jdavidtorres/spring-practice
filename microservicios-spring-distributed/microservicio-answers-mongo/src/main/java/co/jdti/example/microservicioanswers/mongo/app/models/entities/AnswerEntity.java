@@ -4,7 +4,6 @@ import co.jdti.example.commons.exam.models.entities.QuestionEntity;
 import co.jdti.example.commons.student.models.entities.StudentEntity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "answers")
@@ -16,10 +15,8 @@ public class AnswerEntity {
 
     private String text;
 
-    @Transient
     private StudentEntity student;
 
-    @Transient
     private QuestionEntity question;
 
     private Long studentId;
