@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class CourseController extends CommonController<CourseEntity, ICourseServices> {
 

@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class ExamController extends CommonController<ExamEntity, IExamServices> {
 
