@@ -5,6 +5,7 @@ gradle/
 gradlew*
 .run/
 uploads/
+data/
 
 ### STS ###
 .apt_generated
