@@ -14,12 +14,18 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
 @Data
+@Builder
 @Entity
 @Table(name = "clientes")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cliente implements Serializable {
 
     @Id
