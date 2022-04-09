@@ -28,22 +28,21 @@ import lombok.SneakyThrows;
 @AllArgsConstructor
 public class Cliente implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private String apellido;
-    private String email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nombre;
+	private String apellido;
+	private String email;
 
-    @Column(name = "create_at")
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
+	@Column(name = "create_at")
+	@Temporal(TemporalType.DATE)
+	private Date createAt;
 
-    @SneakyThrows
-    @Override
-    public String toString() {
-        return new ObjectMapper().writeValueAsString(this);
-    }
+	@SneakyThrows
+	@Override
+	public String toString() {
+		return new ObjectMapper().writeValueAsString(this);
+	}
 
-    
 }
