@@ -1,14 +1,13 @@
 package co.com.jdti.springbootbackendapirest;
 
-import java.util.Date;
-
+import co.com.jdti.springbootbackendapirest.models.entities.Cliente;
+import co.com.jdti.springbootbackendapirest.models.repositories.IClienteDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import co.com.jdti.springbootbackendapirest.models.entities.Cliente;
-import co.com.jdti.springbootbackendapirest.models.repositories.IClienteDao;
+import java.util.Date;
 
 @SpringBootApplication
 public class SpringBootBackendApiRestApplication implements CommandLineRunner {
@@ -17,7 +16,7 @@ public class SpringBootBackendApiRestApplication implements CommandLineRunner {
 	private IClienteDao iClienteDao;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootBackendApirestApplication.class, args);
+		SpringApplication.run(SpringBootBackendApiRestApplication.class, args);
 	}
 
 	@Override
