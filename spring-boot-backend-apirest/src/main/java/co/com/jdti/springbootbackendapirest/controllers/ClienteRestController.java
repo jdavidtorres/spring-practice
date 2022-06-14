@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -34,20 +33,37 @@ public class ClienteRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> findOne(@PathVariable Long id) {
-        Cliente cliente = clienteService.findById(id);
+    public ResponseEntity<?> findOne(@PathVariable Long id) {
+        Cliente cliente;
         Map<String, Object> response = new HashMap<>();
+
+        try {
+            cliente = clienteService.findById(id);
+        } catch (Exception e) {
+            response.put("mensaje", "Error al realizar la consulta");
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+
         if (cliente == null) {
             response.put("mensaje", "El cliente ID: " + id + " no existe en la base de datos");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cliente create(@RequestBody Cliente cliente) {
-        return clienteService.saveCliente(cliente);
+    public ResponseEntity<?> create(@RequestBody Cliente cliente) {
+        Cliente clienteNew;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            clienteNew = clienteService.saveCliente(cliente);
+        } catch (Exception e) {
+            response.put("mensaje", "Error al registrar el cliente");
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        return new ResponseEntity<>(clienteNew, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
