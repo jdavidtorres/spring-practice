@@ -1,9 +1,10 @@
 package co.com.jdti.springbootbackendapirest.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import co.com.jdti.springbootbackendapirest.models.entities.Cliente;
+import co.com.jdti.springbootbackendapirest.models.services.ClienteService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,46 +16,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.jdti.springbootbackendapirest.models.entities.Cliente;
-import co.com.jdti.springbootbackendapirest.models.services.ClienteService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/clientes")
+@RequiredArgsConstructor
 public class ClienteRestController {
 
-	@Autowired
-	private ClienteService clienteService;
+    private final ClienteService clienteService;
 
-	@GetMapping
-	public List<Cliente> findAll() {
-		return clienteService.findAll();
-	}
+    @GetMapping
+    public List<Cliente> findAll() {
+        return clienteService.findAll();
+    }
 
-	@GetMapping("/{id}")
-	public Cliente findOne(@PathVariable Long id) {
-		return clienteService.findById(id);
-	}
-
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente create(@RequestBody Cliente cliente) {
-		return clienteService.saveCliente(cliente);
-	}
-
-	@PutMapping("/{id}")
-	public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
-		Cliente actual = clienteService.findById(id);
-		actual.setApellido(cliente.getApellido());
-		actual.setNombre(cliente.getNombre());
-		actual.setEmail(cliente.getEmail());
-		return clienteService.saveCliente(actual);
-	}
-
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		clienteService.delete(id);
-	}
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> findOne(@PathVariable Long id) {
         Cliente cliente = clienteService.findById(id);
@@ -64,5 +42,25 @@ public class ClienteRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente create(@RequestBody Cliente cliente) {
+        return clienteService.saveCliente(cliente);
+    }
+
+    @PutMapping("/{id}")
+    public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
+        Cliente actual = clienteService.findById(id);
+        actual.setApellido(cliente.getApellido());
+        actual.setNombre(cliente.getNombre());
+        actual.setEmail(cliente.getEmail());
+        return clienteService.saveCliente(actual);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        clienteService.delete(id);
     }
 }
