@@ -55,4 +55,14 @@ public class ClienteRestController {
 	public void delete(@PathVariable Long id) {
 		clienteService.delete(id);
 	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> findOne(@PathVariable Long id) {
+        Cliente cliente = clienteService.findById(id);
+        Map<String, Object> response = new HashMap<>();
+        if (cliente == null) {
+            response.put("mensaje", "El cliente ID: " + id + " no existe en la base de datos");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
+    }
 }
