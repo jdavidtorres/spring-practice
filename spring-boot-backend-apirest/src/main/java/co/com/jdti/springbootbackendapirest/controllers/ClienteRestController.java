@@ -63,7 +63,9 @@ public class ClienteRestController {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-        return new ResponseEntity<>(clienteNew, HttpStatus.CREATED);
+        response.put("mensaje", "Cliente registrado con éxito");
+        response.put("cliente", clienteNew);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
