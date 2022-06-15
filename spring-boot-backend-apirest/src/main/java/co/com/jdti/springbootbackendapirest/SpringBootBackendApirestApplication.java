@@ -21,13 +21,18 @@ public class SpringBootBackendApiRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		iClienteDao.save(
-				Cliente.builder().nombre("Jhon").apellido("Doe").email("doe@mail.com").createAt(new Date()).build());
-		iClienteDao.save(Cliente.builder().nombre("Linus").apellido("Trovals").email("doe@mail.com")
+		iClienteDao.save(				Cliente.builder()
+				.nombre("Jhon").apellido("Doe")
+				.email("doe1@mail.com")
+				.createAt(new Date()).build());
+		iClienteDao.save(Cliente.builder()
+				.nombre("Linus")
+				.apellido("Trovals")
+				.email("doe4@mail.com")
 				.createAt(new Date()).build());
 		iClienteDao.save(
-				Cliente.builder().nombre("Magma").apellido("Lee").email("doe@mail.com").createAt(new Date()).build());
-		iClienteDao.save(Cliente.builder().nombre("Jade").apellido("Leordof").email("doe@mail.com").createAt(new Date())
+				Cliente.builder().nombre("Magma").apellido("Lee").email("doe2@mail.com").createAt(new Date()).build());
+		iClienteDao.save(Cliente.builder().nombre("Jade").apellido("Leordof").email("doe3@mail.com").createAt(new Date())
 				.build());
 	}
 }
