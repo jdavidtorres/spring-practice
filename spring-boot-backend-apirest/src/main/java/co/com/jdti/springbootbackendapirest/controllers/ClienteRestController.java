@@ -67,12 +67,28 @@ public class ClienteRestController {
     }
 
     @PutMapping("/{id}")
-    public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable Long id) {
         Cliente actual = clienteService.findById(id);
-        actual.setApellido(cliente.getApellido());
-        actual.setNombre(cliente.getNombre());
-        actual.setEmail(cliente.getEmail());
-        return clienteService.saveCliente(actual);
+        Cliente clienteUpdated = null;
+        Map<String, Object> response = new HashMap<>();
+
+        if (actual == null) {
+            response.put("mensaje", "El cliente ID: " + id + " no existe en la base de datos");
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        }
+        try {
+            actual.setApellido(cliente.getApellido());
+            actual.setNombre(cliente.getNombre());
+            actual.setEmail(cliente.getEmail());
+            clienteUpdated = clienteService.saveCliente(actual);
+        } catch (Exception e) {
+            response.put("mensaje", "Error al actualizar el cliente");
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        response.put("mensaje", "El cliente ha sido actualizado con éxito");
+        response.put("cliente", clienteUpdated);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/{id}")
