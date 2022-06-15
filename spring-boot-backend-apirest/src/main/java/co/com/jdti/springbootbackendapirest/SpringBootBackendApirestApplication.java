@@ -38,7 +38,7 @@ public class SpringBootBackendApiRestApplication implements CommandLineRunner {
                 .createAt(new Date()).build());
         iClienteDao.save(Cliente.builder()
                 .nombre("Jade")
-                .apellido("Leordof")
+                .apellido("Griffindor")
                 .email("doe3@mail.com")
                 .createAt(new Date())
                 .build());
