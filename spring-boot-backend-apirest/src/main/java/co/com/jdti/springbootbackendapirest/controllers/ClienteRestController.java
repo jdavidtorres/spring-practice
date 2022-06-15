@@ -92,7 +92,15 @@ public class ClienteRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        clienteService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            clienteService.delete(id);
+        } catch (Exception e) {
+            response.put("mensaje", "Error al eliminar el cliente");
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
