@@ -29,4 +29,11 @@ class CuentaTest {
         assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
         assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
     }
+
+    @Test
+    void testReferenciaCuenta() {
+        Cuenta cuenta = new Cuenta("Fulanito", new BigDecimal(1000));
+        Cuenta cuenta2 = new Cuenta("Fulanito", new BigDecimal(1000));
+        assertEquals(cuenta2, cuenta);
+    }
 }
