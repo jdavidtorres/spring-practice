@@ -20,6 +20,14 @@
             </DockerPortBindingImpl>
           </list>
         </option>
+        <option name="volumeBindings">
+          <list>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/var/lib/mysql" />
+              <option name="hostPath" value="local" />
+            </DockerVolumeBindingImpl>
+          </list>
+        </option>
       </settings>
     </deployment>
     <method v="2" />
