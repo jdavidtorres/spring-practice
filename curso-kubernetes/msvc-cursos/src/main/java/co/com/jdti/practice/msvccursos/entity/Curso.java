@@ -1,20 +1,18 @@
-package co.com.practice.msvcusuarios.models.entity;
+package co.com.jdti.practice.msvccursos.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Table(name = "usuarios")
 @Entity
+@Table(name = "cursos")
 @Data
-public class Usuario {
+public class Curso {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +20,4 @@ public class Usuario {
 
 	@NotBlank
 	private String nombre;
-
-	@NotBlank
-	@Email(message = "Email mal formado")
-	@Column(unique = true)
-	private String email;
-
-	@NotBlank
-	private String password;
 }

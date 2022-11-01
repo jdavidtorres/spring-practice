@@ -13,4 +13,6 @@ public interface IUsuarioService {
 	Usuario guardar(Usuario usuario);
 
 	void eliminar(Long id);
+
+	Optional<Usuario> porEmail(String email);
 }
