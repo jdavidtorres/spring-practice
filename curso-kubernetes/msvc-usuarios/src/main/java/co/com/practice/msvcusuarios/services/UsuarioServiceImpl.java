@@ -4,11 +4,13 @@ import co.com.practice.msvcusuarios.models.entity.Usuario;
 import co.com.practice.msvcusuarios.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements IUsuarioService {
 
