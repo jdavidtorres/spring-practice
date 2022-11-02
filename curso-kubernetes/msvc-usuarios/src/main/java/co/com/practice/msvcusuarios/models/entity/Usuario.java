@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Table(name = "usuarios")
 @Entity
@@ -24,6 +25,7 @@ public class Usuario {
 	private String nombre;
 
 	@NotBlank
+	@NotEmpty
 	@Email(message = "Email mal formado")
 	@Column(unique = true)
 	private String email;

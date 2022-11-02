@@ -1,7 +1,7 @@
 package co.com.jdti.practice.msvccursos.services;
 
 
-import co.com.jdti.practice.msvccursos.entity.Curso;
+import co.com.jdti.practice.msvccursos.models.entity.Curso;
 import co.com.jdti.practice.msvccursos.repositories.ICursoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

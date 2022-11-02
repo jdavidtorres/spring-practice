@@ -1,6 +1,6 @@
 package co.com.jdti.practice.msvccursos.controllers;
 
-import co.com.jdti.practice.msvccursos.entity.Curso;
+import co.com.jdti.practice.msvccursos.models.entity.Curso;
 import co.com.jdti.practice.msvccursos.services.ICursoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

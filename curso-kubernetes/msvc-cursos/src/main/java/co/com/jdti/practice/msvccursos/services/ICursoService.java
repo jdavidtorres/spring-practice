@@ -1,6 +1,6 @@
 package co.com.jdti.practice.msvccursos.services;
 
-import co.com.jdti.practice.msvccursos.entity.Curso;
+import co.com.jdti.practice.msvccursos.models.entity.Curso;
 
 import java.util.List;
 import java.util.Optional;
