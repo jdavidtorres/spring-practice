@@ -1,8 +1,10 @@
 package co.com.jdti.practice.msvccursos.services;
 
 
+import co.com.jdti.practice.msvccursos.clients.IUsuarioClienteRest;
 import co.com.jdti.practice.msvccursos.models.Usuario;
 import co.com.jdti.practice.msvccursos.models.entity.Curso;
+import co.com.jdti.practice.msvccursos.models.entity.CursoUsuario;
 import co.com.jdti.practice.msvccursos.repositories.ICursoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class CursoServicesImpl implements ICursoService {
 
 	private final ICursoRepository iCursoRepository;
+	private final IUsuarioClienteRest iUsuarioClienteRest;
 
 	@Override
 	public List<Curso> listar() {
@@ -41,16 +44,46 @@ public class CursoServicesImpl implements ICursoService {
 
 	@Override
 	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+		Optional<Curso> o = iCursoRepository.findById(cursoId);
+		if (o.isPresent()) {
+			usuario = iUsuarioClienteRest.detalle(usuario.getId());
+			Curso curso = o.get();
+			CursoUsuario cursoUsuario = new CursoUsuario();
+			cursoUsuario.setUsuarioId(usuario.getId());
+			curso.addCursoUsuario(cursoUsuario);
+			iCursoRepository.save(curso);
+			return Optional.of(usuario);
+		}
 		return Optional.empty();
 	}
 
 	@Override
 	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+		Optional<Curso> o = iCursoRepository.findById(cursoId);
+		if (o.isPresent()) {
+			usuario = iUsuarioClienteRest.crear(usuario);
+			Curso curso = o.get();
+			CursoUsuario cursoUsuario = new CursoUsuario();
+			cursoUsuario.setUsuarioId(usuario.getId());
+			curso.addCursoUsuario(cursoUsuario);
+			iCursoRepository.save(curso);
+			return Optional.of(usuario);
+		}
 		return Optional.empty();
 	}
 
 	@Override
 	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+		Optional<Curso> o = iCursoRepository.findById(cursoId);
+		if (o.isPresent()) {
+			usuario = iUsuarioClienteRest.detalle(usuario.getId());
+			Curso curso = o.get();
+			CursoUsuario cursoUsuario = new CursoUsuario();
+			cursoUsuario.setUsuarioId(usuario.getId());
+			curso.removeCursoUsuario(cursoUsuario);
+			iCursoRepository.save(curso);
+			return Optional.of(usuario);
+		}
 		return Optional.empty();
 	}
 }
