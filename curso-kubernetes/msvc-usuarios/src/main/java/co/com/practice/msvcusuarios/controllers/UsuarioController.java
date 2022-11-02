@@ -71,7 +71,7 @@ public class UsuarioController {
 				return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Correo no válido, intenta con otro."));
 			}
 			usuarioDb.setNombre(usuario.getNombre());
-			usuarioDb.setEmail(usuario.getPassword());
+			usuarioDb.setEmail(usuario.getEmail());
 			usuarioDb.setPassword(usuario.getPassword());
 			return ResponseEntity.ok(iUsuarioService.guardar(usuarioDb));
 		}
