@@ -1,5 +1,6 @@
 package co.com.jdti.practice.msvccursos.services;
 
+import co.com.jdti.practice.msvccursos.models.Usuario;
 import co.com.jdti.practice.msvccursos.models.entity.Curso;
 
 import java.util.List;
@@ -13,4 +14,8 @@ public interface ICursoService {
 	Curso guardar(Curso curso);
 
 	void eliminar(Long id);
+
+	Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId);
+	Optional<Usuario>crearUsuario(Usuario usuario, Long cursoId);
+	Optional<Usuario>eliminarUsuario(Usuario usuario, Long cursoId);
 }

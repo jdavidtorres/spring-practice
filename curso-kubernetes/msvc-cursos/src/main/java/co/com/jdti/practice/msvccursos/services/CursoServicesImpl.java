@@ -1,6 +1,7 @@
 package co.com.jdti.practice.msvccursos.services;
 
 
+import co.com.jdti.practice.msvccursos.models.Usuario;
 import co.com.jdti.practice.msvccursos.models.entity.Curso;
 import co.com.jdti.practice.msvccursos.repositories.ICursoRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,20 @@ public class CursoServicesImpl implements ICursoService {
 	@Override
 	public void eliminar(Long id) {
 		iCursoRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+		return Optional.empty();
 	}
 }
