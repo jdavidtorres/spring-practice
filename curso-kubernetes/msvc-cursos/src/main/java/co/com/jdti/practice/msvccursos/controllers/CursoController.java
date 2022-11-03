@@ -1,7 +1,9 @@
 package co.com.jdti.practice.msvccursos.controllers;
 
+import co.com.jdti.practice.msvccursos.models.Usuario;
 import co.com.jdti.practice.msvccursos.models.entity.Curso;
 import co.com.jdti.practice.msvccursos.services.ICursoService;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +75,48 @@ public class CursoController {
 		if (cursoOptional.isPresent()) {
 			iCursoService.eliminar(cursoOptional.get().getId());
 			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping("/asignar-usuario/{cursoId}")
+	public ResponseEntity<?> asignarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+		Optional<Usuario> optionalUsuario;
+		try {
+			optionalUsuario = iCursoService.asignarUsuario(usuario, cursoId);
+		} catch (FeignException fe) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (optionalUsuario.isPresent()) {
+			return ResponseEntity.ok(optionalUsuario.get());
+		}
+		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping("/crear-usuario/{cursoId}")
+	public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+		Optional<Usuario> optionalUsuario;
+		try {
+			optionalUsuario = iCursoService.crearUsuario(usuario, cursoId);
+		} catch (FeignException fe) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (optionalUsuario.isPresent()) {
+			return ResponseEntity.ok(optionalUsuario.get());
+		}
+		return ResponseEntity.noContent().build();
+	}
+
+	@DeleteMapping("/eliminar-usuario/{cursoId}")
+	public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId) {
+		Optional<Usuario> optionalUsuario;
+		try {
+			optionalUsuario = iCursoService.eliminarUsuario(usuario, cursoId);
+		} catch (FeignException fe) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (optionalUsuario.isPresent()) {
+			return ResponseEntity.ok(optionalUsuario.get());
 		}
 		return ResponseEntity.noContent().build();
 	}
