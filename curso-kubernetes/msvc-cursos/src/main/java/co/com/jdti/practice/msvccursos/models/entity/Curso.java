@@ -46,16 +46,4 @@ public class Curso {
 	public void removeCursoUsuario(CursoUsuario cursoUsuario) {
 		this.cursoUsuarios.remove(cursoUsuario);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof CursoUsuario)) {
-			return false;
-		}
-		CursoUsuario o = (CursoUsuario) obj;
-		return this.id != null && this.id.equals(o.getUsuarioId());
-	}
 }
