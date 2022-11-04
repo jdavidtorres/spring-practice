@@ -43,7 +43,7 @@ public class CursoController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Curso> porId(@PathVariable Long id) {
-		Optional<Curso> curso = iCursoService.porId(id);
+		Optional<Curso> curso = iCursoService.porIdConUsuarios(id);
 		return curso.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
 	}
 

@@ -86,4 +86,15 @@ public class CursoServicesImpl implements ICursoService {
 		}
 		return Optional.empty();
 	}
+
+	@Override
+	public Optional<Curso> porIdConUsuarios(Long id) {
+		Curso curso = iCursoRepository.getReferenceById(id);
+		if (!curso.getCursoUsuarios().isEmpty()) {
+			List<Long> ids = curso.getCursoUsuarios().stream().map(CursoUsuario::getUsuarioId).toList();
+			List<Usuario> usuarios = iUsuarioClienteRest.obtenerUsuariosPorCurso(ids);
+			curso.setUsuarios(usuarios);
+		}
+		return Optional.of(curso);
+	}
 }

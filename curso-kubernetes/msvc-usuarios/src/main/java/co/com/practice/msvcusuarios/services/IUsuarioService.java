@@ -15,4 +15,6 @@ public interface IUsuarioService {
 	void eliminar(Long id);
 
 	Optional<Usuario> porEmail(String email);
+
+	List<Usuario> listarPorIds(Iterable<Long> ids);
 }
