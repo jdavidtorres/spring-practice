@@ -6,6 +6,7 @@ import co.com.jdti.practice.msvccursos.models.Usuario;
 import co.com.jdti.practice.msvccursos.models.entity.Curso;
 import co.com.jdti.practice.msvccursos.models.entity.CursoUsuario;
 import co.com.jdti.practice.msvccursos.repositories.ICursoRepository;
+import co.com.jdti.practice.msvccursos.repositories.ICursoUsuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class CursoServicesImpl implements ICursoService {
 
 	private final ICursoRepository iCursoRepository;
 	private final IUsuarioClienteRest iUsuarioClienteRest;
+	private final ICursoUsuario iCursoUsuarioRepository;
 
 	@Override
 	public List<Curso> listar() {
@@ -96,5 +98,10 @@ public class CursoServicesImpl implements ICursoService {
 			curso.setUsuarios(usuarios);
 		}
 		return Optional.of(curso);
+	}
+
+	@Override
+	public void eliminarCursoUsuarioPorId(Long id) {
+		iCursoUsuarioRepository.deleteByUsuarioId(id);
 	}
 }
