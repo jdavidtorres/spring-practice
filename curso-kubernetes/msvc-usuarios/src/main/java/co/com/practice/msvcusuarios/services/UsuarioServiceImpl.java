@@ -1,5 +1,6 @@
 package co.com.practice.msvcusuarios.services;
 
+import co.com.practice.msvcusuarios.clientes.CursoClienteRest;
 import co.com.practice.msvcusuarios.models.entity.Usuario;
 import co.com.practice.msvcusuarios.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements IUsuarioService {
 
 	private final UsuarioRepository usuarioRepository;
+	private final CursoClienteRest cursoClienteRest;
 
 	@Override
 	public List<Usuario> listar() {
@@ -34,6 +36,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public void eliminar(Long id) {
 		usuarioRepository.deleteById(id);
+		cursoClienteRest.eliminarCursoUsuarioPorId(id);
 	}
 
 	@Override
