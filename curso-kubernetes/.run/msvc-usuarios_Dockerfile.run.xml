@@ -2,10 +2,21 @@
   <configuration default="false" name="msvc-usuarios/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="containerName" value="" />
+        <option name="imageTag" value="msvc-usuarios-image" />
+        <option name="containerName" value="msvc-usuarios" />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8001" />
+              <option name="hostPort" value="8001" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
         <option name="sourceFilePath" value="msvc-usuarios/Dockerfile" />
       </settings>
     </deployment>
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="false" run_configuration_name="curso-kubernetes-usuarios" run_configuration_type="MavenRunConfiguration" />
+    </method>
   </configuration>
 </component>
