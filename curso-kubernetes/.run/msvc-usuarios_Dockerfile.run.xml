@@ -12,6 +12,7 @@
             </DockerPortBindingImpl>
           </list>
         </option>
+        <option name="commandLineOptions" value="--network spring" />
         <option name="sourceFilePath" value="msvc-usuarios/Dockerfile" />
       </settings>
     </deployment>
