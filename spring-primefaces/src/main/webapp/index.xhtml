@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:outputPanel styleClass="p-mb-3">
+            <p:autoUpdate/>
+            <h:outputText id="txtUbicacion" value="#{beanDemo.demoText}"/>
+            <br/>
+            <p:selectOneMenu id="option" value="#{beanDemo.selectedOption}">
+                <f:selectItem itemLabel="Select One" itemValue=""/>
+                <f:selectItem itemLabel="Option1" itemValue="Option1"/>
+                <f:selectItem itemLabel="Option2" itemValue="Option2"/>
+                <f:selectItem itemLabel="Option3" itemValue="Option3"/>
+            </p:selectOneMenu>
+            <h:outputText id="txtSelected" value="#{beanDemo.selectedOption}"/>
+        </p:outputPanel>
+        <p:commandButton value="AJAX request" update="@(form)" process="@this" styleClass="p-mr-2"/>
+    </h:form>
+</h:body>
+
+</html>
