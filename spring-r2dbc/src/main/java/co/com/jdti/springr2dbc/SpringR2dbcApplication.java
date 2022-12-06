@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 public class SpringR2dbcApplication implements CommandLineRunner {
@@ -18,10 +17,10 @@ public class SpringR2dbcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Mono<Person> personMono = personRepository.save(Person.builder()
+		personRepository.save(Person.builder()
 			.age(20)
 			.email("mail@mail.com")
 			.firstName("John")
-			.build());
+			.build()).subscribe();
 	}
 }
