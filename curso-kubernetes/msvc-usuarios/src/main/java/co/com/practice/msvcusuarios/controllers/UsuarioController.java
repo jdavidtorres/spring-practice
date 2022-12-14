@@ -2,6 +2,7 @@ package co.com.practice.msvcusuarios.controllers;
 
 import co.com.practice.msvcusuarios.models.entity.Usuario;
 import co.com.practice.msvcusuarios.services.IUsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,8 @@ public class UsuarioController {
 
 	private ResponseEntity<Map<String, Object>> validar(BindingResult result) {
 		Map<String, Object> response = new HashMap<>();
-		result.getFieldErrors().forEach(error -> response.put(error.getField(), "El campo " + error.getField() + " " + error.getDefaultMessage()));
+		result.getFieldErrors().forEach(error -> response.put(error.getField(),
+				"El campo " + error.getField() + " " + error.getDefaultMessage()));
 		return ResponseEntity.badRequest().body(response);
 	}
 
@@ -55,7 +56,8 @@ public class UsuarioController {
 			return validar(result);
 		}
 		if (iUsuarioService.porEmail(usuario.getEmail()).isPresent()) {
-			return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Correo no válido, intenta con otro."));
+			return ResponseEntity.badRequest()
+					.body(Collections.singletonMap("error", "Correo no válido, intenta con otro."));
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(iUsuarioService.guardar(usuario));
 	}
@@ -68,8 +70,10 @@ public class UsuarioController {
 		Optional<Usuario> usuarioOptional = iUsuarioService.porId(id);
 		if (usuarioOptional.isPresent()) {
 			Usuario usuarioDb = usuarioOptional.get();
-			if (!usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) && iUsuarioService.porEmail(usuario.getEmail()).isPresent()) {
-				return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Correo no válido, intenta con otro."));
+			if (!usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail())
+					&& iUsuarioService.porEmail(usuario.getEmail()).isPresent()) {
+				return ResponseEntity.badRequest()
+						.body(Collections.singletonMap("error", "Correo no válido, intenta con otro."));
 			}
 			usuarioDb.setNombre(usuario.getNombre());
 			usuarioDb.setEmail(usuario.getEmail());

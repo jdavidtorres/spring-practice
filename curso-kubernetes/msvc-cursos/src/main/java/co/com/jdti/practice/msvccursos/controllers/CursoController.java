@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,8 @@ public class CursoController {
 
 	private ResponseEntity<Map<String, Object>> validar(BindingResult result) {
 		Map<String, Object> response = new HashMap<>();
-		result.getFieldErrors().forEach(error -> response.put(error.getField(), "El campo " + error.getField() + " " + error.getDefaultMessage()));
+		result.getFieldErrors().forEach(error -> response.put(error.getField(),
+				"El campo " + error.getField() + " " + error.getDefaultMessage()));
 		return ResponseEntity.badRequest().body(response);
 	}
 
