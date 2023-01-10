@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MsvcAuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="curso-kubernetes.msvc-auth.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="co.com.jdti.msvcauth.MsvcAuthApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

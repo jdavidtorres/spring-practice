@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MsvcCursosApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="curso-kubernetes.msvc-cursos.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="co.com.jdti.practice.msvccursos.MsvcCursosApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

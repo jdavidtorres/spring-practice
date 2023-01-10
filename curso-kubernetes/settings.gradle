@@ -1,3 +1,5 @@
 rootProject.name = 'curso-kubernetes'
 include 'msvc-cursos'
 include 'msvc-usuarios'
+include 'msvc-auth'
+include 'msvc-gateway'

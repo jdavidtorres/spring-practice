@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MsvcUsuariosApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="curso-kubernetes.msvc-usuarios.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="co.com.practice.msvcusuarios.MsvcUsuariosApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
