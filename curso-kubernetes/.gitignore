@@ -1,5 +1,8 @@
 HELP.md
 target/
+.gradle
+gradle
+gradlew.bat
 
 ### STS ###
 .apt_generated
