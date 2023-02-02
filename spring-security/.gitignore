@@ -1,5 +1,4 @@
 HELP.md
-.gradle
 build/
 
 ### STS ###
@@ -24,10 +23,11 @@ out/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
 
 ### VS Code ###
 .vscode/
 
 ### Gradle ###
 gradle/
+.gradle
+gradlew.bat
