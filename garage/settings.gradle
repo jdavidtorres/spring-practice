@@ -1,0 +1,3 @@
+rootProject.name = 'garage'
+include 'store'
+include 'taller'
