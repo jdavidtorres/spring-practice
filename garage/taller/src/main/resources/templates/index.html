@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Taller</title>
+	<link href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="text-center pt-5 my-5">
+	<img class="mx-auto mb-4 d-block" alt width="300" height="150">
+	<h1 class="fw-bold" th:text="${title}">App Title</h1>
+	<a class="btn btn-primary my-3 btn-lg" th:href="@{/add-car}">
+		Ingreso
+	</a>
+	<a class="btn btn-primary my-3 btn-lg" th:href="@{/list-cars}">
+		Consultar, editar o eliminar
+	</a>
+	<script type="text/javascript"
+			src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</div>
+</body>
+</html>
