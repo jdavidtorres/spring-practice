@@ -16,11 +16,19 @@ public class SpringSecurityApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(AuthService authService) {
-		return args -> authService.register(RegisterRequest.builder()
-			.firstname("John")
-			.lastname("Doe")
-			.email("jhon@doe.com")
-			.password("12345")
-			.build());
+		return args -> {
+			authService.register(RegisterRequest.builder()
+				.firstname("John")
+				.lastname("Doe")
+				.email("jhon@doe.com")
+				.password("12345")
+				.build());
+			authService.register(RegisterRequest.builder()
+				.firstname("John2")
+				.lastname("Doe")
+				.email("jhon2@doe.com")
+				.password("12345")
+				.build());
+		};
 	}
 }
