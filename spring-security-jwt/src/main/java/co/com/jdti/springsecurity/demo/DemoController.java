@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class DemoController {
-	
+
 	@GetMapping("/demo")
-	public ResponseEntity<String>sayHello(){
+	public ResponseEntity<String> sayHello() {
 		return ResponseEntity.ok("Hello World!!");
 	}
 }
