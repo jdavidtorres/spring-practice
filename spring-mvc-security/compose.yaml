@@ -1,0 +1,15 @@
+services:
+  db:
+    container_name: mvc-security-database
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=admin-root
+      - MYSQL_DATABASE=security_db
+    ports:
+      - 3306:3306
+    volumes:
+      - local:/var/lib/mysql
+volumes:
+  local:
