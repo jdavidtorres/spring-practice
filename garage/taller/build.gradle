@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '3.0.2'
+	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'java'
 }
@@ -23,8 +23,8 @@ dependencies {
 	// Third party libraries
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'	
+	implementation 'com.mysql:mysql-connector-j'	
     implementation 'org.webjars:bootstrap:5.2.3'
-	implementation 'org.webjars:jquery:3.6.3'
+	implementation 'org.webjars:jquery:3.6.4'
     implementation 'org.webjars.npm:bootstrap-icons:1.10.3'
 }
