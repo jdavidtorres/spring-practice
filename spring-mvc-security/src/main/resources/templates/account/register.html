@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+	<body>
+		<a th:href="@{/account/login}">Back</a>
+		<h3>Register</h3>
+		<th:block th:text="${message}"></th:block>
+		<form method="post" th:action="@{/account/register}">
+			<table>
+				<tr>
+					<td>Username</td>
+					<td>
+						<input type="text" th:field="${account.username}">
+					</td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td>
+						<input type="password" th:field="${account.password}">
+					</td>
+				</tr>
+				<tr>
+					<td>Full Name</td>
+					<td>
+						<input type="text" th:field="${account.fullName}">
+					</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>
+						<input type="text" th:field="${account.email}">
+					</td>
+				</tr>
+				<tr>
+					<td>Birth Date</td>
+					<td>
+						<input type="text" th:field="${account.birthday}" id="birthday">
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">Gender</td>
+					<td>
+						<input type="radio" th:field="${account.gender}" th:value="male"> Male
+						<br/>
+						<input type="radio" th:field="${account.gender}" th:value="female"> Female
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">Role</td>
+					<td valign="top">
+						<th:block th:each="role: ${roles}">
+							<input type="checkbox" th:value="${role.id}" name="roles">
+							<span th:text="${role.name}"></span>
+						</th:block>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="submit">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.7.1/dist/jquery.min.js}"></script>
+		<script>
+			$(document).ready(function () {
+				/*$("#birthday").datepicker({
+					dateFormat: "dd/mm/yy",
+				});*/
+			});
+		</script>
+	</body>
+</html>
