@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+	<body>
+		<h3>Login</h3>
+		<th:block th:text="${message}"></th:block>
+		<form method="post" th:action="@{/account/process-login}">
+			<table>
+				<tr>
+					<td>Username:</td>
+					<td><input type="text" name="username"/></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password"/></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="Login"/>
+						<br/>
+						<a th:href="@{/account/register}">Register</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.7.1/dist/jquery.min.js}"></script>
+	</body>
+</html>

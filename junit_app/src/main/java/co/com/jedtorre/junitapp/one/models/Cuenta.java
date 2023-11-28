@@ -3,6 +3,8 @@ package co.com.jedtorre.junitapp.one.models;
 import java.math.BigDecimal;
 
 public class Cuenta {
+	
+	// a
 
     private String persona;
     private BigDecimal saldo;

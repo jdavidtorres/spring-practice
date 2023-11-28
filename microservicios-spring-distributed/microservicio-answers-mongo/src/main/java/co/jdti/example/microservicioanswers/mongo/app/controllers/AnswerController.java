@@ -23,7 +23,7 @@ public class AnswerController {
     private IAnswerServices iAnswerServices;
 
     @PostMapping
-    public ResponseEntity<?> saveAll(@RequestBody List<AnswerEntity> answers) {
+    public ResponseEntity<List<AnswerEntity>> saveAll(@RequestBody List<AnswerEntity> answers) {
         answers = answers.stream()
                 .map(r -> {
                     r.setStudentId(r.getStudent().getId());
@@ -34,7 +34,7 @@ public class AnswerController {
     }
 
     @GetMapping("/student/{studentId}/exam/{examId}")
-    public ResponseEntity<?> findByStudentByExam(@PathVariable Long studentId, @PathVariable Long examId) {
+    public ResponseEntity<List<AnswerEntity>> findByStudentByExam(@PathVariable Long studentId, @PathVariable Long examId) {
         return ResponseEntity.ok(iAnswerServices.findAnswerByStudentByExam(studentId, examId));
     }
 

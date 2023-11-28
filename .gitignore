@@ -1,6 +1,20 @@
 .vscode/
-.idea/
 .DS_Store
-.gradle
 target/
-spring-security/gradlew
+build/
+
+### Intellij IDEA ###
+.idea/
+.run/
+.iml
+
+### Gradle ###
+.gradle
+gradle
+gradlew
+gradlew.bat
+
+### Java ###
+.classpath
+.project
+.settings
