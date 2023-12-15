@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+	<head th:replace="~{layout/template :: head}">
+		<meta charset="UTF-8">
+		<meta name="viewport"
+					content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Title</title>
+	</head>
+	<body>
+		<header th:replace="~{layout/template :: header}"></header>
+		<div class="container my-5">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<h3 class="h4 mb-4 fw-bold text-center">Detalle</h3>
+					<p class="fw-bold" th:text="${wish.description}">Xbox Series X</p>
+					<div th:text="${'Precio: ' + #numbers.formatCurrency(wish.price())}">3000000</div>
+					<div th:text="${'Ahorrado: ' + #numbers.formatCurrency(wish.saved())}">1000000</div>
+					<div class="progress my-1" role="progressbar"
+							 aria-label="Basic example"
+							 th:aria-valuenow="${wish.percentage()}"
+							 aria-valuemin="0" aria-valuemax="100">
+						<div class="progress-bar progress-bar-striped" th:style="${'width: ' + wish.percentage() + '%'}"></div>
+					</div>
+					<div class="my-3">
+						<a class="btn btn-primary btn-sm mb-3" th:text="${'Editar'}"
+							 th:href="@{/wisheses/edit/{id}(id=${wish.id})}">Save</a>
+						<a class="btn btn-warning btn-sm mb-3" th:text="${'Atrás'}" th:href="@{/wishes/page/1}">Close</a>
+					</div>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+		<footer th:replace="~{layout/template :: footer}"></footer>
+	</body>
+</html>

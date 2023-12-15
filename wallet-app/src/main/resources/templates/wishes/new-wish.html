@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+	<head th:replace="~{layout/template :: head}">
+		<meta charset="UTF-8">
+		<meta name="viewport"
+					content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Title</title>
+	</head>
+	<body>
+		<header th:replace="~{layout/template :: header}"></header>
+		<div class="container my-5">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<h3 class="h4 mb-4 fw-bold text-center">Nueva meta</h3>
+					<form method="post" th:action="@{/wishes/save}" th:object="${newWish}">
+						<div class="mb-3">
+							<label for="description" class="form-label">Descripcion</label>
+							<input id="description" name="description" type="text" class="form-control-sm" th:field="*{description}"/>
+						</div>
+						<div class="mb-3">
+							<label for="price" class="form-label">Precio</label>
+							<input id="price" name="price" type="text" class="form-control-sm" th:field="*{price}"/>
+						</div>
+						<button class="btn btn-success btn-sm mb-3" th:text="${'Guardar'}" type="submit">Save</button>
+						<a class="btn btn-primary btn-sm mb-3" th:text="${'Cancelar'}" th:href="@{/wishes}">Close</a>
+					</form>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+		</div>
+		<footer th:replace="~{layout/template :: footer}"></footer>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+	<head th:replace="~{layout/template :: head}">
+		<meta charset="UTF-8">
+		<title th:text="${title}">Title</title>
+	</head>
+	<body>
+		<header th:replace="~{layout/template :: header}"></header>
+		<div class="container my-5">
+			<h2>Suscripciones</h2>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-12 mx-auto">
+					<div class="d-grid gap-2 d-md-flex justify-content-end">
+						<a class="btn btn-primary btn-sm mb-3"
+							 th:text="${'Agregar a la lista'}"
+							 th:href="@{/subscription/new}">
+							New
+						</a>
+					</div>
+					<div class="alert alert-light" role="alert" th:if="${subscriptions.isEmpty()}">
+						No hay suscripciones registradas
+					</div>
+					<div class="card"
+							 th:unless="${subscriptions.isEmpty()}">
+						<div class="card-header">
+							<h3 class="h4 fw-bold text-center">Mis suscripciones</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer th:replace="~{layout/template :: footer}"></footer>
+	</body>
+</html>

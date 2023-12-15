@@ -1,0 +1,89 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.0'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'co.com.jdti'
+version = '0.0.1'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//  implementation 'org.flywaydb:flyway-core'
+	//  implementation 'org.flywaydb:flyway-mysql'
+	//  implementation 'com.google.firebase:firebase-admin:9.2.0'
+	//  implementation 'com.google.firebase:firebase-analytics:21.4.0'
+	implementation 'org.webjars.npm:jquery:3.7.1'
+	implementation 'org.webjars.npm:bootstrap:5.3.2'
+	implementation 'org.webjars.npm:bootstrap-icons:1.11.1'
+	// implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+	// implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	// implementation 'org.springdoc:springdoc-openapi-starter-common:2.2.0'
+	// implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+	// implementation 'org.springframework.modulith:spring-modulith-starter-jpa'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	// implementation 'org.springframework.modulith:spring-modulith-starter-core'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	// runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
+	// runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
+
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	// testImplementation 'org.springframework.kafka:spring-kafka-test'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	// testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.testcontainers:mysql'
+	testImplementation 'org.testcontainers:kafka'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.modulith:spring-modulith-bom:1.1.0'
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2023.0.0-RC1'
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+	maxParallelForks = Runtime.runtime.availableProcessors()
+}

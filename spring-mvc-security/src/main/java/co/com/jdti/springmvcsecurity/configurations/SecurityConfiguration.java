@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -26,14 +27,16 @@ public class SecurityConfiguration {
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("/home/**", "/about/**", "/account/welcome", "/account/access-denied", "/account/login",
-					"/account" +
-						"/register",
+				.requestMatchers("/home/**",
+					"/about/**",
+					"/account/access-denied",
+					"/account/login",
+					"/account/register",
 					"/webjars/**").permitAll()
 				.requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
 				.requestMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
 				.requestMatchers("/employee/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "EMPLOYEE")
-			)
+				.anyRequest().authenticated())
 			.formLogin(formLogin -> formLogin
 				.loginPage("/account/login")
 				.loginProcessingUrl("/account/process-login")
@@ -41,15 +44,17 @@ public class SecurityConfiguration {
 				.passwordParameter("password")
 				.defaultSuccessUrl("/account/welcome")
 				.failureUrl("/account/login?error")
-				.permitAll()
-			)
+				.permitAll())
+			.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+				.invalidSessionUrl("/account/login")
+				.maximumSessions(1))
 			.logout(logout -> logout
 				.logoutUrl("/account/logout")
 				.logoutSuccessUrl("/account/login")
-				.permitAll()
-			).exceptionHandling(exceptionHandling -> exceptionHandling
-				.accessDeniedPage("/account/access-denied")
-			)
+				.permitAll())
+			.exceptionHandling(exceptionHandling -> exceptionHandling
+				.accessDeniedPage("/account/access-denied"))
 			.build();
 	}
 
